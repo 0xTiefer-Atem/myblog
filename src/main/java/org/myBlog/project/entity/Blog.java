@@ -41,10 +41,18 @@ public class Blog implements Serializable {
     * 文章标题
     */
     private String blogTitle;
+
+
+    private String blogOverview;
     /**
     * 文章内容
     */
     private Object blogContent;
+
+    /**
+     * 文章使用状态
+     */
+    private int blogStatus;
     /**
     * 文章创建时间
     */

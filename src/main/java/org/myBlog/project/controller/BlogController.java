@@ -34,17 +34,22 @@ public class BlogController {
      * @return 单条数据
      */
     @GetMapping("/selectOne")
-    public ResponseV2 selectOne(String id) {
+    public ResponseV2 selectOne(String id,String status) {
+        System.out.println(id+"  "+status);
         Blog blog;
-        try{
-            blog = this.blogDao.queryById(id);
-        }catch (Exception e){
-            return ResponseHelper.create(StatusAndMsg.ERROR1_STATUS,StatusAndMsg.ERROR1_MSG);
+        try {
+            blog = this.blogDao.queryById(id,status);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseHelper.create(StatusAndMsg.ERROR1_STATUS, StatusAndMsg.ERROR1_MSG);
         }
-        List<BlogTag> blogTagListJson = JSON.parseArray(blog.getBlogTagList(),BlogTag.class);
+
+        List<BlogTag> blogTagListJson = JSON.parseArray(blog.getBlogTagList(), BlogTag.class);
         blog.setBlogTagListJson(blogTagListJson);
-        return ResponseHelper.create(blog,StatusAndMsg.SUCCESS1_STATUS,StatusAndMsg.SUCCESS1_MSG);
+
+        return ResponseHelper.create(blog, StatusAndMsg.SUCCESS1_STATUS, StatusAndMsg.SUCCESS1_MSG);
     }
+
 
     @GetMapping("/selectAll")
     public ResponseV2 selectAll() {
@@ -52,6 +57,7 @@ public class BlogController {
         try {
             blogList = this.blogDao.selectAll();
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseHelper.create(StatusAndMsg.ERROR1_STATUS,StatusAndMsg.ERROR1_MSG);
         }
 
@@ -72,6 +78,7 @@ public class BlogController {
         try {
             blogList = this.blogDao.selectAllByLimit(offset,limit);
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseHelper.create(StatusAndMsg.ERROR1_STATUS,StatusAndMsg.ERROR1_MSG);
         }
 
@@ -79,6 +86,20 @@ public class BlogController {
         for (int i = 0; i < length; i++) {
             List<BlogTag> blogTagListJson = JSON.parseArray(blogList.get(i).getBlogTagList(),BlogTag.class);
             blogList.get(i).setBlogTagListJson(blogTagListJson);
+        }
+
+        return ResponseHelper.create(blogList,StatusAndMsg.SUCCESS1_STATUS,StatusAndMsg.SUCCESS1_MSG);
+    }
+
+
+    @GetMapping("/selectSpecialArticle")
+    public ResponseV2 selectSpecialArticle() {
+        List<Blog> blogList;
+        try {
+            blogList = this.blogDao.selectSpecialArticle();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseHelper.create(StatusAndMsg.ERROR1_STATUS,StatusAndMsg.ERROR1_MSG);
         }
 
         return ResponseHelper.create(blogList,StatusAndMsg.SUCCESS1_STATUS,StatusAndMsg.SUCCESS1_MSG);

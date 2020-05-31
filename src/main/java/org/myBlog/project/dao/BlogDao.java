@@ -57,8 +57,8 @@ public interface BlogDao {
      * @return 对象列表
      */
 
-    @Select("select * from blog")
+    @Select("select blog_id, blog_type, blog_tag_list, blog_overview, blog_title, create_time  from blog limit #{offset}, #{limit}")
     @ResultMap("blogMap")
-    List<Blog> selectAll();
+    List<Blog> selectAll(@Param("offset") int offset, @Param("limit") int limit);
 
 }

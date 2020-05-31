@@ -52,10 +52,10 @@ public class BlogController {
 
 
     @GetMapping("/selectAll")
-    public ResponseV2 selectAll() {
+    public ResponseV2 selectAll(int offset, int limit) {
         List<Blog> blogList;
         try {
-            blogList = this.blogDao.selectAll();
+            blogList = this.blogDao.selectAll(offset, limit);
         }catch (Exception e){
             e.printStackTrace();
             return ResponseHelper.create(StatusAndMsg.ERROR1_STATUS,StatusAndMsg.ERROR1_MSG);

@@ -1,16 +1,16 @@
 package org.myBlog.project.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.myBlog.project.dao.BlogDao;
 import org.myBlog.project.entity.Blog;
 import org.myBlog.project.entity.BlogTag;
-import org.myBlog.project.util.ResponseHelper;
-import org.myBlog.project.util.ResponseV2;
-import org.myBlog.project.util.StatusAndMsg;
+import org.myBlog.project.util.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章表(Blog)表控制层
@@ -33,8 +33,8 @@ public class BlogController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("/selectOne")
-    public ResponseV2 selectOne(String id,String status) {
+    @GetMapping("/selectOneBlog")
+    public ResponseV2 selectOneBlog(String id,String status) {
         System.out.println(id+"  "+status);
         Blog blog;
         try {
@@ -43,9 +43,6 @@ public class BlogController {
             e.printStackTrace();
             return ResponseHelper.create(StatusAndMsg.ERROR1_STATUS, StatusAndMsg.ERROR1_MSG);
         }
-
-        List<BlogTag> blogTagListJson = JSON.parseArray(blog.getBlogTagList(), BlogTag.class);
-        blog.setBlogTagListJson(blogTagListJson);
 
         return ResponseHelper.create(blog, StatusAndMsg.SUCCESS1_STATUS, StatusAndMsg.SUCCESS1_MSG);
     }
@@ -59,12 +56,6 @@ public class BlogController {
         }catch (Exception e){
             e.printStackTrace();
             return ResponseHelper.create(StatusAndMsg.ERROR1_STATUS,StatusAndMsg.ERROR1_MSG);
-        }
-
-        int length = blogList.size();
-        for (int i = 0; i < length; i++) {
-            List<BlogTag> blogTagListJson = JSON.parseArray(blogList.get(i).getBlogTagList(),BlogTag.class);
-            blogList.get(i).setBlogTagListJson(blogTagListJson);
         }
 
         return ResponseHelper.create(blogList,StatusAndMsg.SUCCESS1_STATUS,StatusAndMsg.SUCCESS1_MSG);
@@ -82,21 +73,15 @@ public class BlogController {
             return ResponseHelper.create(StatusAndMsg.ERROR1_STATUS,StatusAndMsg.ERROR1_MSG);
         }
 
-        int length = blogList.size();
-        for (int i = 0; i < length; i++) {
-            List<BlogTag> blogTagListJson = JSON.parseArray(blogList.get(i).getBlogTagList(),BlogTag.class);
-            blogList.get(i).setBlogTagListJson(blogTagListJson);
-        }
-
         return ResponseHelper.create(blogList,StatusAndMsg.SUCCESS1_STATUS,StatusAndMsg.SUCCESS1_MSG);
     }
 
 
-    @GetMapping("/selectSpecialArticle")
-    public ResponseV2 selectSpecialArticle() {
+    @GetMapping("/selectSpecialBlog")
+    public ResponseV2 selectSpecialBlog() {
         List<Blog> blogList;
         try {
-            blogList = this.blogDao.selectSpecialArticle();
+            blogList = this.blogDao.selectSpecialBlog();
         }catch (Exception e){
             e.printStackTrace();
             return ResponseHelper.create(StatusAndMsg.ERROR1_STATUS,StatusAndMsg.ERROR1_MSG);
@@ -105,4 +90,37 @@ public class BlogController {
         return ResponseHelper.create(blogList,StatusAndMsg.SUCCESS1_STATUS,StatusAndMsg.SUCCESS1_MSG);
     }
 
+    @PostMapping("/insertNewBlog")
+    public ResponseV2 insertNewBlog(@RequestBody  Blog blog) {
+        String createTime = TimeOpt.getCurrentTime();
+        String blogId = GetUUID.getUUID();
+        blog.setBlogId(blogId);
+        blog.setCreateTime(createTime);
+        System.out.println(blog);
+
+        try{
+            blogDao.insertNewBlog(blog);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseHelper.create(StatusAndMsg.ERROR2_STATUS,StatusAndMsg.ERROR2_MSG);
+        }
+
+        return ResponseHelper.create(StatusAndMsg.SUCCESS2_STATUS,StatusAndMsg.SUCCESS2_MSG);
+    }
+
+
+    @PostMapping("/updateOneBlogStatus")
+    public ResponseV2 updateOneBlogStatus(@RequestBody JSONObject data) {
+        String id = data.getString("id");
+        System.out.println(id);
+        try {
+            blogDao.updateOneBlogStatus(id);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseHelper.create(StatusAndMsg.ERROR3_STATUS,StatusAndMsg.ERROR3_MSG);
+        }
+        ResponseV2 r = ResponseHelper.create(StatusAndMsg.SUCCESS3_STATUS,StatusAndMsg.SUCCESS3_MSG);
+        System.out.println(r.toString());
+        return r;
+    }
 }

@@ -48,9 +48,9 @@ public interface BlogDao {
     List<Blog> selectAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
-    @Select("select blog_id, blog_type, blog_tag_list, blog_overview, blog_title, create_time from blog where blog_status = 2")
+    @Select("select blog_id, blog_type,  blog_status,   blog_tag_list, blog_overview, blog_title, create_time from blog where blog_status = 2")
     @ResultMap("blogMap")
-    List<Blog> selectSpecialArticle();
+    List<Blog> selectSpecialBlog();
 
     /**
      * 通过实体作为筛选条件查询
@@ -58,12 +58,20 @@ public interface BlogDao {
      * @return 对象列表
      */
 
-    @Select("select blog_id, blog_type, blog_status, blog_tag_list, blog_overview, blog_title, create_time  from blog limit #{offset}, #{limit}")
+    @Select("select blog_id, blog_type, blog_status, blog_tag_list, blog_overview, blog_title, create_time  from blog where blog_status = 1 limit #{offset}, #{limit}")
     @ResultMap("blogMap")
     List<Blog> selectAll(@Param("offset") int offset, @Param("limit") int limit);
 
 
     @Insert("insert into blog (blog_id, blog_type, blog_tag_list, blog_overview, blog_title, blog_status, blog_content, create_time) values(#{blogId}, #{blogType}, #{blogTagList}, #{blogOverview}, #{blogTitle}, 1, #{blogContent}, #{createTime})")
     int insertNewBlog(Blog blog);
+
+
+    @Update("update blog set blog_status = -1 where blog_id = #{id}")
+    int updateOneBlogStatus(String id);
+
+
+    @Update("update blog set blog_type = #{blogType}, blog_tag_list = #{blogTagList}, blog_overview = #{blogOverview}, blog_title = #{blogTitle}, blog_content = #{blogContent}, create_time = #{createTime} where blog_id = #{blogId}")
+    int updateBlog(Blog blog);
 
 }

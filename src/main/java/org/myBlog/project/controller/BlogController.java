@@ -119,8 +119,28 @@ public class BlogController {
             e.printStackTrace();
             return ResponseHelper.create(StatusAndMsg.ERROR3_STATUS,StatusAndMsg.ERROR3_MSG);
         }
-        ResponseV2 r = ResponseHelper.create(StatusAndMsg.SUCCESS3_STATUS,StatusAndMsg.SUCCESS3_MSG);
-        System.out.println(r.toString());
-        return r;
+        return ResponseHelper.create(StatusAndMsg.SUCCESS3_STATUS,StatusAndMsg.SUCCESS3_MSG);
+    }
+
+
+    @PostMapping("/updateBlog")
+    public ResponseV2 updateBlog(@RequestBody JSONObject data) {
+        Blog blog = new Blog();
+        blog.setBlogId(data.getString("blogId"));
+        blog.setBlogType(data.getString("blogType"));
+        blog.setBlogTagList(data.getString("blogTagList"));
+        blog.setBlogOverview(data.getString("blogOverview"));
+        blog.setBlogTitle(data.getString("blogTitle"));
+        blog.setBlogContent(data.getString("blogContent"));
+        blog.setCreateTime(TimeOpt.getCurrentTime());
+
+        try{
+            blogDao.updateBlog(blog);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseHelper.create(StatusAndMsg.ERROR4_STATUS,StatusAndMsg.ERROR4_MSG);
+        }
+
+        return ResponseHelper.create(StatusAndMsg.SUCCESS4_STATUS,StatusAndMsg.SUCCESS4_MSG);
     }
 }

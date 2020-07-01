@@ -27,7 +27,7 @@ public class ResponseHelper {
     }
 
     public static ResponseV2 create(int code, String s) {
-        return create((Object)null, 200, s);
+        return create((Object)null, code, s);
     }
 
 

@@ -35,8 +35,6 @@ public class Blog implements Serializable {
     */
     private String blogTagList;
 
-
-    private List<BlogTag> blogTagListJson;
     /**
     * 文章标题
     */
@@ -56,6 +54,6 @@ public class Blog implements Serializable {
     /**
     * 文章创建时间
     */
-    private Date createTime;
+    private String createTime;
 
 }

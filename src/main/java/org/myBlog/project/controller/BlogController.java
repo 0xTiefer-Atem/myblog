@@ -1,6 +1,8 @@
 package org.myblog.project.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.myblog.project.entity.Blog;
@@ -23,7 +25,7 @@ public class BlogController {
     private BlogService blogService;
 
 
-    @ApiOperation("一个博客信息")
+    @ApiOperation("一篇博客信息")
     @GetMapping("/query/one")
     public ResponseV2 selectOneBlog(String id, String status) {
         log.info("id = {}, status = {}", id, status);
@@ -33,10 +35,11 @@ public class BlogController {
 
     @ApiOperation("博客列表")
     @GetMapping("/blog/list")
-    public ResponseV2 selectAll(int offset, int limit) {
+    public ResponseV2 selectAll(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<Blog> pageInfo = new PageInfo<Blog>();
         return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());
     }
-
 
 
     @ApiOperation("个人简历和在校经历")
@@ -45,9 +48,9 @@ public class BlogController {
         List<Blog> blogList;
         try {
             blogList = new ArrayList<>();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(),ResultCode.SELECT_ERROR.getMsg());
+            return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(), ResultCode.SELECT_ERROR.getMsg());
         }
 
         return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());
@@ -55,18 +58,18 @@ public class BlogController {
 
     @ApiOperation("新增博客")
     @PostMapping("/insert/blog")
-    public ResponseV2 insertNewBlog(@RequestBody  Blog blog) {
+    public ResponseV2 insertNewBlog(@RequestBody Blog blog) {
         String createTime = TimeOpt.getCurrentTime();
         String blogId = GetUUID.getUUID();
         blog.setBlogId(blogId);
         blog.setCreateTime(createTime);
         System.out.println(blog);
 
-        try{
+        try {
 //            blogDao.insertNewBlog(blog);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return ResponseHelper.create(ResultCode.INSERT_ERROR.getCode(),ResultCode.INSERT_ERROR.getMsg());
+            return ResponseHelper.create(ResultCode.INSERT_ERROR.getCode(), ResultCode.INSERT_ERROR.getMsg());
         }
 
         return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());
@@ -80,9 +83,9 @@ public class BlogController {
         System.out.println(id);
         try {
 //            blogDao.updateOneBlogStatus(id);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return ResponseHelper.create(ResultCode.UPDATE_ERROR.getCode(),ResultCode.UPDATE_ERROR.getMsg());
+            return ResponseHelper.create(ResultCode.UPDATE_ERROR.getCode(), ResultCode.UPDATE_ERROR.getMsg());
         }
         return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());
     }
@@ -100,11 +103,11 @@ public class BlogController {
         blog.setBlogContent(data.getString("blogContent"));
         blog.setCreateTime(TimeOpt.getCurrentTime());
 
-        try{
+        try {
 //            blogDao.updateBlog(blog);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return ResponseHelper.create(ResultCode.UPDATE_ERROR.getCode(),ResultCode.UPDATE_ERROR.getMsg());
+            return ResponseHelper.create(ResultCode.UPDATE_ERROR.getCode(), ResultCode.UPDATE_ERROR.getMsg());
         }
 
         return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());

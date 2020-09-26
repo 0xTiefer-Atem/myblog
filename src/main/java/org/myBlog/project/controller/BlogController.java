@@ -1,8 +1,6 @@
 package org.myblog.project.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.myblog.project.entity.Blog;
@@ -35,10 +33,15 @@ public class BlogController {
 
     @ApiOperation("博客列表")
     @GetMapping("/blog/list")
-    public ResponseV2 selectAll(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        PageInfo<Blog> pageInfo = new PageInfo<Blog>();
-        return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());
+    public ResponseV2 selectAll(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
+        log.info("博客列表-REQ: {},{}", pageNum, pageSize);
+        try {
+
+            return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(), ResultCode.SELECT_ERROR.getMsg());
+        }
     }
 
 

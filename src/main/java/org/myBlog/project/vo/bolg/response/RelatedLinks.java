@@ -11,6 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class RelatedLinks {
+    /**
+     * 网站链接
+     * */
     private String webLink;
+    /**
+     * 网站图片
+     * */
     private String webIcon;
 }

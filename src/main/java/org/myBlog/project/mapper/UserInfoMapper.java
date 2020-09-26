@@ -1,9 +1,6 @@
 package org.myblog.project.mapper;
 
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 import org.myblog.project.entity.UserInfo;
 
 import java.util.List;
@@ -14,6 +11,7 @@ import java.util.List;
  * @author makejava
  * @since 2020-05-27 10:42:46
  */
+@Mapper
 public interface UserInfoMapper {
 
     int deleteByPrimaryKey(Integer userId);

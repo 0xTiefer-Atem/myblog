@@ -22,40 +22,40 @@ import java.util.List;
 @NoArgsConstructor
 public class UserInfo {
     /**
-    * id
-    */
+     * id
+     */
     private Integer userId;
     /**
      * 头像
-     * */
+     */
     private String userAvatar;
     /**
      * 用户名称
-     * */
+     */
     private String userName;
     /**
      * 座右铭
-     * */
+     */
     private String userMotor;
     /**
      * 相关链接
-     * */
+     */
     private String userRelatedLinks;
     /**
      * 链接json
-     * */
+     */
     private List<RelatedLinks> userRelatedLinksJson;
     /**
      * 技能列表
-     * */
+     */
     private String userSkillInfoList;
     /**
      * 技能列表json
-     * */
+     */
     private List<SkillInfo> userSkillInfoListJson;
     /**
      * 创建时间
-     * */
+     */
     private Date createTime;
 
 }

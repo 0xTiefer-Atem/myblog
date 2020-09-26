@@ -15,5 +15,5 @@ public interface BlogService {
      * 查询博客列表
      * */
 
-    List<Blog> queryBlogList();
+    List<Blog> queryBlogList(Integer pageNum, Integer pageSize);
 }

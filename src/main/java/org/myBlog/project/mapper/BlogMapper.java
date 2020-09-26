@@ -1,5 +1,6 @@
 package org.myblog.project.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.myblog.project.entity.Blog;
 import org.myblog.project.entity.UserInfo;
 
@@ -10,7 +11,7 @@ import org.myblog.project.entity.UserInfo;
  * @since 2020-05-19 16:04:00
  */
 
-
+@Mapper
 public interface BlogMapper {
 
     int deleteByPrimaryKey(Integer id);

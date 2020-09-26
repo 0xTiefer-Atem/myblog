@@ -8,8 +8,9 @@ import java.util.List;
 
 @Service("BlogService")
 public class BlogServiceImpl implements BlogService {
+
     @Override
-    public List<Blog> queryBlogList() {
+    public List<Blog> queryBlogList(Integer pageNum, Integer pageSize) {
         return null;
     }
 }

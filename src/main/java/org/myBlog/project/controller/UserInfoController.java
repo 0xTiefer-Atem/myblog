@@ -27,21 +27,21 @@ public class UserInfoController {
     @GetMapping("/selectUserInfo")
     public ResponseV2 selectOne(Integer id) {
         UserInfo userInfo;
-        try{
+        try {
             userInfo = new UserInfo();
-        }catch (Exception e) {
-            return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(),ResultCode.SELECT_ERROR.getMsg());
+        } catch (Exception e) {
+            return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(), ResultCode.SELECT_ERROR.getMsg());
         }
 
-        List<RelatedLinks> relatedLinks = JSON.parseArray(userInfo.getUserRelatedLinks(),RelatedLinks.class);
+        List<RelatedLinks> relatedLinks = JSON.parseArray(userInfo.getUserRelatedLinks(), RelatedLinks.class);
 
         userInfo.setUserRelatedLinksJson(relatedLinks);
 
-        List<SkillInfo> skillInfos = JSON.parseArray(userInfo.getUserSkillInfoList(),SkillInfo.class);
+        List<SkillInfo> skillInfos = JSON.parseArray(userInfo.getUserSkillInfoList(), SkillInfo.class);
 
         userInfo.setUserSkillInfoListJson(skillInfos);
 
-        return ResponseHelper.create(userInfo,ResultCode.SELECT_ERROR.getCode(),ResultCode.SELECT_ERROR.getMsg());
+        return ResponseHelper.create(userInfo, ResultCode.SELECT_ERROR.getCode(), ResultCode.SELECT_ERROR.getMsg());
     }
 
 }

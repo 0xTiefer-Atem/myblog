@@ -11,5 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class BlogTag {
+    /**
+    * 名字
+    * */
     private String name;
 }

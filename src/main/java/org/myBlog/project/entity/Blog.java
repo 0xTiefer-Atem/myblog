@@ -1,4 +1,4 @@
-package org.myBlog.project.entity;
+package org.myblog.project.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,8 +18,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Blog implements Serializable {
-    private static final long serialVersionUID = 762230905835313737L;
+public class Blog {
     
     private Integer id;
     /**
@@ -40,7 +39,9 @@ public class Blog implements Serializable {
     */
     private String blogTitle;
 
-
+    /**
+     * 概览
+     * */
     private String blogOverview;
     /**
     * 文章内容

@@ -1,16 +1,15 @@
-package org.myBlog.project.controller;
+package org.myblog.project.controller;
 
 import com.alibaba.fastjson.JSON;
-import org.myBlog.project.dao.UserInfoDao;
-import org.myBlog.project.entity.RelatedLinks;
-import org.myBlog.project.entity.SkillInfo;
-import org.myBlog.project.entity.UserInfo;
-import org.myBlog.project.util.ResponseHelper;
-import org.myBlog.project.util.ResponseV2;
-import org.myBlog.project.util.StatusAndMsg;
+import io.swagger.annotations.ApiOperation;
+import org.myblog.project.vo.bolg.response.RelatedLinks;
+import org.myblog.project.vo.bolg.response.SkillInfo;
+import org.myblog.project.entity.UserInfo;
+import org.myblog.project.util.ResponseHelper;
+import org.myblog.project.util.ResponseV2;
+import org.myblog.project.util.ResultCode;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -23,25 +22,15 @@ import java.util.List;
 @RequestMapping("/api/blog")
 @CrossOrigin
 public class UserInfoController {
-    /**
-     * 服务对象
-     */
-    @Resource
-    private UserInfoDao userInfoDao;
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
+    @ApiOperation("查询用户信息")
     @GetMapping("/selectUserInfo")
     public ResponseV2 selectOne(Integer id) {
         UserInfo userInfo;
         try{
-            userInfo = userInfoDao.queryById(1);
+            userInfo = new UserInfo();
         }catch (Exception e) {
-            return ResponseHelper.create(StatusAndMsg.ERROR1_STATUS,StatusAndMsg.ERROR1_MSG);
+            return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(),ResultCode.SELECT_ERROR.getMsg());
         }
 
         List<RelatedLinks> relatedLinks = JSON.parseArray(userInfo.getUserRelatedLinks(),RelatedLinks.class);
@@ -52,7 +41,7 @@ public class UserInfoController {
 
         userInfo.setUserSkillInfoListJson(skillInfos);
 
-        return ResponseHelper.create(userInfo,StatusAndMsg.SUCCESS1_STATUS,StatusAndMsg.SUCCESS1_MSG);
+        return ResponseHelper.create(userInfo,ResultCode.SELECT_ERROR.getCode(),ResultCode.SELECT_ERROR.getMsg());
     }
 
 }

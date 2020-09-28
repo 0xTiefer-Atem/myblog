@@ -21,6 +21,9 @@ public class ResponseHelper {
     public static <T> ResponseV2 create(T data) {
         return create(data, 200, "请求成功");
     }
+    public static <T> ResponseV2 create() {
+        return create(null, 200, "请求成功");
+    }
 
     public static ResponseV2 create(int code) {
         return create((Object) null, code, "请求成功");

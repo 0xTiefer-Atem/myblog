@@ -1,6 +1,8 @@
 package org.myBlog.project.service;
 
 import org.myBlog.project.entity.Blog;
+import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
+import org.myBlog.project.vo.bolg.response.BlogResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,9 @@ public interface BlogService {
     /**
      * 查询博客列表
      * */
-
-    List<Blog> queryBlogList(Integer pageNum, Integer pageSize);
+    List<BlogInfoResponse> queryBlogList(Integer pageNum, Integer pageSize);
+    /**
+     * 根据blogId查询博客
+     * */
+    BlogResponse queryBlogByBlogId(String blogId);
 }

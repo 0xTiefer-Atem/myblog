@@ -15,8 +15,8 @@ public class TimeOpt {
      *
      * @return
      */
-    public static String getCurrentTime() {
-        return sdf.format(date);
+    public static Date getCurrentTime() {
+        return new Date();
     }
 
 

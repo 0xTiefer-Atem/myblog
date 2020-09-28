@@ -10,14 +10,10 @@ import lombok.Setter;
  */
 
 /**
- * 状态返回
+ * 状态返回枚举
  */
 @Getter
 public enum ResultCode {
-    /**
-     * 增删改查操作成功
-     */
-    OPT_SUCCESS(2000, "成功"),
     /**
      * 查询失败
      */

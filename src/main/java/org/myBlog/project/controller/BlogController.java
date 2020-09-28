@@ -1,15 +1,19 @@
 package org.myBlog.project.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.myBlog.project.entity.Blog;
 import org.myBlog.project.service.BlogService;
 import org.myBlog.project.util.*;
+import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
+import org.myBlog.project.vo.bolg.response.BlogResponse;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -23,29 +27,36 @@ public class BlogController {
     private BlogService blogService;
 
 
-    @ApiOperation("一篇博客信息")
-    @GetMapping("/query/one")
-    public ResponseV2 selectOneBlog(String id, String status) {
-        log.info("id = {}, status = {}", id, status);
-        return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());
-    }
-
-
-    @ApiOperation("博客列表")
-    @GetMapping("/blog/list")
+    @ApiOperation("博客信息列表")
+    @GetMapping("/list")
     public ResponseV2 selectAll(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
-        log.info("博客列表-REQ: {},{}", pageNum, pageSize);
+        log.info("博客信息列表-REQ: {},{}", pageNum, pageSize);
         try {
-            return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());
+            List<BlogInfoResponse> blogInfoList = blogService.queryBlogList(pageNum, pageSize);
+            log.info("博客信息列表-RESP: {}", JSON.toJSONString(blogInfoList));
+            return ResponseHelper.create(blogInfoList);
         }catch (Exception e){
             e.printStackTrace();
             return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(), ResultCode.SELECT_ERROR.getMsg());
         }
     }
 
+    @ApiOperation("一篇博客信息")
+    @GetMapping("/query/one")
+    public ResponseV2 selectOneBlog(@RequestParam("blogId")String blogId) {
+        log.info("一篇博客信息-REQ: {}", blogId);
+        try {
+            BlogResponse response = blogService.queryBlogByBlogId(blogId);
+            log.info("一篇博客信息-RESP: {}", JSON.toJSONString(response));
+            return ResponseHelper.create(response);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(), ResultCode.SELECT_ERROR.getMsg());
+        }
+    }
 
     @ApiOperation("个人简历和在校经历")
-    @GetMapping("/select/special")
+    @GetMapping("/query/special")
     public ResponseV2 selectSpecialBlog() {
         List<Blog> blogList;
         try {
@@ -55,13 +66,13 @@ public class BlogController {
             return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(), ResultCode.SELECT_ERROR.getMsg());
         }
 
-        return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());
+        return ResponseHelper.create();
     }
 
     @ApiOperation("新增博客")
-    @PostMapping("/insert/blog")
+    @PostMapping("/add/blog")
     public ResponseV2 insertNewBlog(@RequestBody Blog blog) {
-        String createTime = TimeOpt.getCurrentTime();
+        Date createTime = TimeOpt.getCurrentTime();
         String blogId = GetUUID.getUUID();
         blog.setBlogId(blogId);
         blog.setCreateTime(createTime);
@@ -74,12 +85,12 @@ public class BlogController {
             return ResponseHelper.create(ResultCode.INSERT_ERROR.getCode(), ResultCode.INSERT_ERROR.getMsg());
         }
 
-        return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());
+        return ResponseHelper.create();
     }
 
 
     @ApiOperation("更新博客状态")
-    @PostMapping("/update/blog/status")
+    @PostMapping("/update/status")
     public ResponseV2 updateOneBlogStatus(@RequestBody JSONObject data) {
         String id = data.getString("id");
         System.out.println(id);
@@ -89,12 +100,12 @@ public class BlogController {
             e.printStackTrace();
             return ResponseHelper.create(ResultCode.UPDATE_ERROR.getCode(), ResultCode.UPDATE_ERROR.getMsg());
         }
-        return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());
+        return ResponseHelper.create();
     }
 
 
     @ApiOperation("更新博客内容")
-    @PostMapping("/update/blog")
+    @PostMapping("/update/content")
     public ResponseV2 updateBlog(@RequestBody JSONObject data) {
         Blog blog = new Blog();
         blog.setBlogId(data.getString("blogId"));
@@ -112,6 +123,6 @@ public class BlogController {
             return ResponseHelper.create(ResultCode.UPDATE_ERROR.getCode(), ResultCode.UPDATE_ERROR.getMsg());
         }
 
-        return ResponseHelper.create(ResultCode.OPT_SUCCESS.getCode(), ResultCode.OPT_SUCCESS.getMsg());
+        return ResponseHelper.create();
     }
 }

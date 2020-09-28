@@ -17,12 +17,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+    //http://localhost:9192/swagger-ui.html#/
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .pathMapping("/")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.myblog.project.controller"))
+                .apis(RequestHandlerSelectors.basePackage("org.myBlog.project.controller"))
                 .paths(PathSelectors.any())
                 .build().apiInfo(new ApiInfoBuilder()
                         .title("个人博客接口-Swagger")

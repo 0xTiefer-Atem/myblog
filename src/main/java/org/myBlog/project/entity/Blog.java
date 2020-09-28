@@ -46,7 +46,7 @@ public class Blog {
     /**
      * 文章内容
      */
-    private Object blogContent;
+    private String blogContent;
 
     /**
      * 文章使用状态
@@ -55,6 +55,6 @@ public class Blog {
     /**
      * 文章创建时间
      */
-    private String createTime;
+    private Date createTime;
 
 }

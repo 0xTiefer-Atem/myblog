@@ -1,4 +1,4 @@
-package org.myblog.project.entity;
+package org.myBlog.project.entity;
 
 import java.io.Serializable;
 import java.util.Date;

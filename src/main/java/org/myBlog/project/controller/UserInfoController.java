@@ -1,13 +1,13 @@
-package org.myblog.project.controller;
+package org.myBlog.project.controller;
 
 import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.ApiOperation;
-import org.myblog.project.vo.bolg.response.RelatedLinks;
-import org.myblog.project.vo.bolg.response.SkillInfo;
-import org.myblog.project.entity.UserInfo;
-import org.myblog.project.util.ResponseHelper;
-import org.myblog.project.util.ResponseV2;
-import org.myblog.project.util.ResultCode;
+import org.myBlog.project.entity.UserInfo;
+import org.myBlog.project.util.ResponseHelper;
+import org.myBlog.project.util.ResponseV2;
+import org.myBlog.project.util.ResultCode;
+import org.myBlog.project.vo.bolg.response.RelatedLinks;
+import org.myBlog.project.vo.bolg.response.SkillInfo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

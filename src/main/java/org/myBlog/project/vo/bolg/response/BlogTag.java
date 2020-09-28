@@ -1,4 +1,4 @@
-package org.myblog.project.vo.bolg.response;
+package org.myBlog.project.vo.bolg.response;
 
 
 import lombok.AllArgsConstructor;

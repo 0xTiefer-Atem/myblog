@@ -1,4 +1,4 @@
-package org.myblog.project.util;
+package org.myBlog.project.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

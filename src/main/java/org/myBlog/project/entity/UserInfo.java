@@ -1,10 +1,10 @@
-package org.myblog.project.entity;
+package org.myBlog.project.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.myblog.project.vo.bolg.response.RelatedLinks;
-import org.myblog.project.vo.bolg.response.SkillInfo;
+import org.myBlog.project.vo.bolg.response.RelatedLinks;
+import org.myBlog.project.vo.bolg.response.SkillInfo;
 
 import java.util.Date;
 import java.util.List;

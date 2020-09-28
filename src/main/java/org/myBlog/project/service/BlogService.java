@@ -1,6 +1,6 @@
-package org.myblog.project.service;
+package org.myBlog.project.service;
 
-import org.myblog.project.entity.Blog;
+import org.myBlog.project.entity.Blog;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

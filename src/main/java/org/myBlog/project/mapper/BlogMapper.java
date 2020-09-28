@@ -1,8 +1,7 @@
-package org.myblog.project.mapper;
+package org.myBlog.project.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.myblog.project.entity.Blog;
-import org.myblog.project.entity.UserInfo;
+import org.myBlog.project.entity.Blog;
 
 /**
  * 文章表(Blog)表数据库访问层

@@ -1,7 +1,7 @@
-package org.myblog.project.mapper;
+package org.myBlog.project.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.myblog.project.entity.UserAccount;
+import org.myBlog.project.entity.UserAccount;
 
 @Mapper
 public interface UserAccountMapper {

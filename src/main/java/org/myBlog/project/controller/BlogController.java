@@ -1,11 +1,11 @@
-package org.myblog.project.controller;
+package org.myBlog.project.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.myblog.project.entity.Blog;
-import org.myblog.project.service.BlogService;
-import org.myblog.project.util.*;
+import org.myBlog.project.entity.Blog;
+import org.myBlog.project.service.BlogService;
+import org.myBlog.project.util.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

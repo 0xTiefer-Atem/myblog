@@ -1,4 +1,4 @@
-package org.myblog.project.util;
+package org.myBlog.project.util;
 
 import org.springframework.http.HttpStatus;
 

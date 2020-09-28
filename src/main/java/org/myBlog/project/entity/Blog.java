@@ -1,4 +1,4 @@
-package org.myblog.project.entity;
+package org.myBlog.project.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

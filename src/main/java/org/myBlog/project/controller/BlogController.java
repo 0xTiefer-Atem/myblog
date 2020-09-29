@@ -53,7 +53,7 @@ public class BlogController {
             return ResponseHelper.create(response);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseHelper.create(ResultCodeEnum.SELECT_ERROR.getCode(), ResultCodeEnum.SELECT_ERROR.getMsg());
+            return ResponseHelper.create(ResultCodeEnum.UPDATE_ERROR.getCode(), ResultCodeEnum.UPDATE_ERROR.getMsg());
         }
     }
 

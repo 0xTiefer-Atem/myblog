@@ -23,9 +23,10 @@ public class BlogServiceImpl implements BlogService {
      * 返回博客信息列表
      * */
     @Override
-    public List<BlogInfoResponse> queryBlogList(Integer pageNum, Integer pageSize) {
+    public PageInfo<BlogInfoResponse> queryBlogList(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         List<BlogInfoResponse> blogInfoList = new ArrayList<>();
-        List<Blog> blogs  = blogMapper.queryBlogList(pageNum, pageSize);
+        List<Blog> blogs  = blogMapper.queryBlogList();
         for (Blog blog: blogs) {
             BlogInfoResponse blogInfo = BlogInfoResponse.builder()
                     .blogId(blog.getBlogId())
@@ -37,7 +38,8 @@ public class BlogServiceImpl implements BlogService {
                     .build();
             blogInfoList.add(blogInfo);
         }
-        return blogInfoList;
+        PageInfo<BlogInfoResponse>  responsePageInfo = new PageInfo<>(blogInfoList);
+        return responsePageInfo;
     }
 
     @Override
@@ -53,5 +55,24 @@ public class BlogServiceImpl implements BlogService {
                 .createTime(blog.getCreateTime())
                 .build();
         return response;
+    }
+
+    @Override
+    public List<BlogResponse> querySpecialBlog() {
+        List<BlogResponse> responses = new ArrayList<>();
+        List<Blog> specialBlogList = blogMapper.querySpecialBlog();
+        for (Blog blog: specialBlogList) {
+            BlogResponse response = BlogResponse.builder()
+                    .blogId(blog.getBlogId())
+                    .blogType(blog.getBlogType())
+                    .blogTagList(blog.getBlogTagList())
+                    .blogTitle(blog.getBlogTitle())
+                    .blogOverview(blog.getBlogOverview())
+                    .blogContent(blog.getBlogContent())
+                    .createTime(blog.getCreateTime())
+                    .build();
+            responses.add(response);
+        }
+        return responses;
     }
 }

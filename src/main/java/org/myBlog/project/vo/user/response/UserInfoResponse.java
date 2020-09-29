@@ -1,30 +1,23 @@
-package org.myBlog.project.entity;
+package org.myBlog.project.vo.user.response;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.myBlog.project.vo.bolg.response.RelatedLinks;
-import org.myBlog.project.vo.bolg.response.SkillInfo;
-
-import java.util.Date;
-import java.util.List;
 
 /**
- * 个人信息(UserInfo)实体类
- *
- * @author makejava
- * @since 2020-05-27 10:42:46
+ * @Author WangQian
+ * @Date 2020/9/29 下午 4:20
  */
 
-
+/**
+ * 返回用户信息
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInfo {
-    /**
-     * id
-     */
-    private Integer id;
+@Builder
+public class UserInfoResponse {
     /**
      * 用户编号
      */
@@ -49,9 +42,4 @@ public class UserInfo {
      * 技能列表
      */
     private String userSkillInfoList;
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
 }

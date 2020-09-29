@@ -1,15 +1,20 @@
 package org.myBlog.project.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.myBlog.project.entity.UserInfo;
 import org.myBlog.project.enums.ResultCodeEnum;
+import org.myBlog.project.service.UserService;
 import org.myBlog.project.util.ResponseHelper;
 import org.myBlog.project.util.ResponseV2;
 import org.myBlog.project.vo.bolg.response.RelatedLinks;
 import org.myBlog.project.vo.bolg.response.SkillInfo;
+import org.myBlog.project.vo.user.response.UserInfoResponse;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -21,27 +26,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/blog")
 @CrossOrigin
+@Slf4j
 public class UserInfoController {
+    @Resource
+    private UserService userService;
 
     @ApiOperation("查询用户信息")
-    @GetMapping("/selectUserInfo")
-    public ResponseV2 selectOne(Integer id) {
-        UserInfo userInfo;
+    @GetMapping("/select/user/info")
+    public ResponseV2 selectUserInfo(@RequestParam("userNo") String userNo) {
+        log.info("查询用户信息-REQ: {}", userNo);
         try {
-            userInfo = new UserInfo();
+            UserInfoResponse response = userService.queryUserInfoByUserNo(userNo);
+            log.info("查询用户信息-RESP: {}", JSON.toJSONString(response));
+            return ResponseHelper.create(response);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseHelper.create(ResultCodeEnum.SELECT_ERROR.getCode(), ResultCodeEnum.SELECT_ERROR.getMsg());
         }
-
-        List<RelatedLinks> relatedLinks = JSON.parseArray(userInfo.getUserRelatedLinks(), RelatedLinks.class);
-
-        userInfo.setUserRelatedLinksJson(relatedLinks);
-
-        List<SkillInfo> skillInfos = JSON.parseArray(userInfo.getUserSkillInfoList(), SkillInfo.class);
-
-        userInfo.setUserSkillInfoListJson(skillInfos);
-
-        return ResponseHelper.create(userInfo, ResultCodeEnum.SELECT_ERROR.getCode(), ResultCodeEnum.SELECT_ERROR.getMsg());
     }
-
 }

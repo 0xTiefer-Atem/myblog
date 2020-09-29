@@ -10,11 +10,12 @@
         <result column="blog_overview" jdbcType="VARCHAR" property="blogOverview"/>
         <result column="blog_content" jdbcType="VARCHAR" property="blogContent"/>
         <result column="blog_status" jdbcType="INTEGER" property="blogStatus"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, blog_id, blog_type, blog_tag_list, blog_title, blog_overview, blog_content, blog_status,
-    create_time
+    create_time, update_time
   </sql>
 
     <select id="queryBlogList" resultMap="BaseResultMap">

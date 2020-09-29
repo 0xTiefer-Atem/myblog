@@ -3,6 +3,7 @@ package org.myBlog.project.service;
 import com.github.pagehelper.PageInfo;
 import org.myBlog.project.entity.Blog;
 import org.myBlog.project.vo.bolg.request.AddBlogRequest;
+import org.myBlog.project.vo.bolg.request.UpdateBlogRequest;
 import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
 import org.springframework.stereotype.Service;
@@ -40,4 +41,9 @@ public interface BlogService {
      * 修改博客状态
      */
     void updateStatus(String blogId, Integer status);
+
+    /**
+     * 更新博客
+     */
+    void updateBlog(UpdateBlogRequest request);
 }

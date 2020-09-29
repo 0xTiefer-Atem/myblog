@@ -57,9 +57,17 @@
 
     </insert>
 
-    <update id="updateStatus" >
+    <update id="updateStatus">
         update blog set
         blog_status = #{status}
+        where
+        blog_id = #{blogId}
+    </update>
+
+    <update id="updateBlog" parameterType="org.myBlog.project.entity.Blog">
+        update blog set
+        blog_title = #{blogTitle}, blog_type = #{blogType}, blog_tag_list = #{blogTagList},
+        blog_overview = #{blogOverview}, blog_content = #{blogContent}
         where
         blog_id = #{blogId}
     </update>

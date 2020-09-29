@@ -10,6 +10,7 @@ import org.myBlog.project.enums.ResultCodeEnum;
 import org.myBlog.project.service.BlogService;
 import org.myBlog.project.util.*;
 import org.myBlog.project.vo.bolg.request.AddBlogRequest;
+import org.myBlog.project.vo.bolg.request.UpdateBlogRequest;
 import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
 import org.springframework.web.bind.annotation.*;
@@ -99,23 +100,14 @@ public class BlogController {
 
     @ApiOperation("更新博客内容")
     @PostMapping("/update/content")
-    public ResponseV2 updateBlog(@RequestBody JSONObject data) {
-        Blog blog = new Blog();
-        blog.setBlogId(data.getString("blogId"));
-        blog.setBlogType(data.getString("blogType"));
-        blog.setBlogTagList(data.getString("blogTagList"));
-        blog.setBlogOverview(data.getString("blogOverview"));
-        blog.setBlogTitle(data.getString("blogTitle"));
-        blog.setBlogContent(data.getString("blogContent"));
-        blog.setCreateTime(TimeOpt.getCurrentTime());
-
+    public ResponseV2 updateBlog(@RequestBody UpdateBlogRequest request) {
+        log.info("更新博客内容-REQ: {}", JSON.toJSONString(request));
         try {
-//            blogDao.updateBlog(blog);
+            blogService.updateBlog(request);
+            return ResponseHelper.create();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseHelper.create(ResultCodeEnum.UPDATE_ERROR.getCode(), ResultCodeEnum.UPDATE_ERROR.getMsg());
         }
-
-        return ResponseHelper.create();
     }
 }

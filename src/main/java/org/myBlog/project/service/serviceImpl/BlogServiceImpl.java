@@ -8,6 +8,7 @@ import org.myBlog.project.mapper.BlogMapper;
 import org.myBlog.project.service.BlogService;
 import org.myBlog.project.util.GetUUID;
 import org.myBlog.project.vo.bolg.request.AddBlogRequest;
+import org.myBlog.project.vo.bolg.request.UpdateBlogRequest;
 import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,5 +117,22 @@ public class BlogServiceImpl implements BlogService {
     @Transactional
     public void updateStatus(String blogId, Integer status) {
         blogMapper.updateStatus(blogId, status);
+    }
+
+    /**
+     * 更新博客
+     */
+    @Override
+    @Transactional
+    public void updateBlog(UpdateBlogRequest request) {
+        Blog b = Blog.builder()
+                .blogId(request.getBlogId())
+                .blogTitle(request.getBlogTitle())
+                .blogType(request.getBlogType())
+                .blogTagList(request.getBlogTagList())
+                .blogOverview(request.getBlogOverview())
+                .blogContent(request.getBlogContent())
+                .build();
+        blogMapper.updateBlog(b);
     }
 }

@@ -16,7 +16,9 @@ import java.util.List;
 @Mapper
 public interface BlogMapper {
 
-    List<Blog> queryBlogList(@Param("pageNum")Integer pageNum, @Param("pageSize") Integer pageSize);
+    List<Blog> queryBlogList();
 
     Blog queryBlogByBlogId(@Param("blogId") String blogId);
+
+    List<Blog> querySpecialBlog();
 }

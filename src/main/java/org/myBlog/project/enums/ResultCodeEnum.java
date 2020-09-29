@@ -1,4 +1,4 @@
-package org.myBlog.project.util;
+package org.myBlog.project.enums;
 
 import lombok.Data;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import lombok.Setter;
  * 状态返回枚举
  */
 @Getter
-public enum ResultCode {
+public enum ResultCodeEnum {
     /**
      * 查询失败
      */
@@ -35,7 +35,7 @@ public enum ResultCode {
     private int code;
     private String msg;
 
-    ResultCode(int code, String msg) {
+    ResultCodeEnum(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }

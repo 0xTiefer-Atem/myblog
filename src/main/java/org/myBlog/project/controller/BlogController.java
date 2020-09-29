@@ -2,6 +2,7 @@ package org.myBlog.project.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.myBlog.project.entity.Blog;
@@ -32,9 +33,9 @@ public class BlogController {
     public ResponseV2 selectAll(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
         log.info("博客信息列表-REQ: {},{}", pageNum, pageSize);
         try {
-            List<BlogInfoResponse> blogInfoList = blogService.queryBlogList(pageNum, pageSize);
-            log.info("博客信息列表-RESP: {}", JSON.toJSONString(blogInfoList));
-            return ResponseHelper.create(blogInfoList);
+            PageInfo<BlogInfoResponse> responsePageInfo = blogService.queryBlogList(pageNum, pageSize);
+            log.info("博客信息列表-RESP: {}", JSON.toJSONString(responsePageInfo));
+            return ResponseHelper.create(responsePageInfo);
         }catch (Exception e){
             e.printStackTrace();
             return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(), ResultCode.SELECT_ERROR.getMsg());
@@ -57,16 +58,17 @@ public class BlogController {
 
     @ApiOperation("个人简历和在校经历")
     @GetMapping("/query/special")
-    public ResponseV2 selectSpecialBlog() {
-        List<Blog> blogList;
+    public ResponseV2 querySpecialBlog() {
         try {
-            blogList = new ArrayList<>();
+            List<BlogResponse> responses = blogService.querySpecialBlog();
+            log.info("个人简历和在校经历-RESP: {}", JSON.toJSONString(responses));
+            return ResponseHelper.create(responses);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(), ResultCode.SELECT_ERROR.getMsg());
         }
 
-        return ResponseHelper.create();
+
     }
 
     @ApiOperation("新增博客")

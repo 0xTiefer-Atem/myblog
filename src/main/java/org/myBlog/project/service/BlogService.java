@@ -2,6 +2,7 @@ package org.myBlog.project.service;
 
 import com.github.pagehelper.PageInfo;
 import org.myBlog.project.entity.Blog;
+import org.myBlog.project.vo.bolg.request.AddBlogRequest;
 import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
 import org.springframework.stereotype.Service;
@@ -28,4 +29,9 @@ public interface BlogService {
      * 查询在校经历与工作经历
      */
     List<BlogResponse> querySpecialBlog();
+
+    /**
+     * 新增博客
+     */
+    void addBlog(AddBlogRequest request);
 }

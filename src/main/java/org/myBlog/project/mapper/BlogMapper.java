@@ -21,4 +21,6 @@ public interface BlogMapper {
     Blog queryBlogByBlogId(@Param("blogId") String blogId);
 
     List<Blog> querySpecialBlog();
+
+    void addBlog(Blog blog);
 }

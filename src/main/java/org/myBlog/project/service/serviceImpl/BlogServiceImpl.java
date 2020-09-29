@@ -3,15 +3,20 @@ package org.myBlog.project.service.serviceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.myBlog.project.entity.Blog;
+import org.myBlog.project.enums.BlogStatusEnum;
 import org.myBlog.project.mapper.BlogMapper;
 import org.myBlog.project.service.BlogService;
+import org.myBlog.project.util.GetUUID;
+import org.myBlog.project.vo.bolg.request.AddBlogRequest;
 import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service("BlogService")
@@ -42,6 +47,9 @@ public class BlogServiceImpl implements BlogService {
         return responsePageInfo;
     }
 
+    /**
+     * 根据blogId查询博客
+     */
     @Override
     public BlogResponse queryBlogByBlogId(String blogId) {
         Blog blog = blogMapper.queryBlogByBlogId(blogId);
@@ -57,6 +65,9 @@ public class BlogServiceImpl implements BlogService {
         return response;
     }
 
+    /**
+     * 查询在校经历与工作经历
+     */
     @Override
     public List<BlogResponse> querySpecialBlog() {
         List<BlogResponse> responses = new ArrayList<>();
@@ -74,5 +85,26 @@ public class BlogServiceImpl implements BlogService {
             responses.add(response);
         }
         return responses;
+    }
+
+    /**
+     * 新增博客
+     */
+    @Override
+    @Transactional
+    public void addBlog(AddBlogRequest request) {
+        String blogId = "B" + GetUUID.getUUID();
+        Date insetDate = new Date();
+        Blog b = Blog.builder()
+                .blogId(blogId)
+                .blogType(request.getBlogType())
+                .blogTagList(request.getBlogTagList())
+                .blogTitle(request.getBlogTitle())
+                .blogOverview(request.getBlogOverview())
+                .blogContent(request.getBlogContent())
+                .blogStatus(BlogStatusEnum.USE.getStatus())
+                .createTime(insetDate)
+                .build();
+        blogMapper.addBlog(b);
     }
 }

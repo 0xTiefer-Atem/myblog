@@ -18,5 +18,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class AddBlogRequest {
-
+    /**
+     * 分类
+     */
+    private String blogType;
+    /**
+     * 相关标签
+     */
+    private String blogTagList;
+    /**
+     * 标题
+     */
+    private String blogTitle;
+    /**
+     * 概览
+     */
+    private String blogOverview;
+    /**
+     * 内容
+     */
+    private String blogContent;
 }

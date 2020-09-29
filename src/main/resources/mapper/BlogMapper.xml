@@ -46,4 +46,15 @@
         blog_status = 2
     </select>
 
+    <insert id="addBlog" parameterType="org.myBlog.project.entity.Blog">
+        insert into
+        blog
+        (blog_id, blog_type, blog_tag_list, blog_title, blog_overview,
+        blog_content, blog_status, create_time)
+        values
+        (#{blogId}, #{blogType}, #{blogTagList}, #{blogTitle},
+        #{blogOverview}, #{blogContent}, #{blogStatus}, #{createTime})
+
+    </insert>
+
 </mapper>

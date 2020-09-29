@@ -9,7 +9,7 @@
         <result column="user_motor" jdbcType="VARCHAR" property="userMotor"/>
         <result column="user_related_links" jdbcType="VARCHAR" property="userRelatedLinks"/>
         <result column="user_skillInfo_list" jdbcType="VARCHAR" property="userSkillInfoList"/>
-        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">

@@ -10,7 +10,7 @@
         <result column="blog_overview" jdbcType="VARCHAR" property="blogOverview"/>
         <result column="blog_content" jdbcType="VARCHAR" property="blogContent"/>
         <result column="blog_status" jdbcType="INTEGER" property="blogStatus"/>
-        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">

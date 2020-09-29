@@ -26,7 +26,6 @@
         where
         blog_status = 1
         order by create_time desc
-        limit #{pageNum}, #{pageSize}
     </select>
 
     <select id="queryBlogByBlogId" resultMap="BaseResultMap">
@@ -36,6 +35,15 @@
         blog
         where
         blog_id = #{blogId}
+    </select>
+
+    <select id="querySpecialBlog" resultMap="BaseResultMap">
+        select blog_id, blog_type, blog_tag_list,
+        blog_title, blog_overview, blog_content, create_time
+        from
+        blog
+        where
+        blog_status = 2
     </select>
 
 </mapper>

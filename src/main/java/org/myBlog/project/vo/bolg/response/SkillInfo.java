@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 public class SkillInfo {
     /**
      * 技术站名称
-     * */
+     */
     private String skillName;
     /**
      * 技术栈熟练度
-     * */
+     */
     private int skillPercentage;
 }

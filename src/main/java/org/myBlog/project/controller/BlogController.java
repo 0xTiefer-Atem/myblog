@@ -36,7 +36,7 @@ public class BlogController {
             PageInfo<BlogInfoResponse> responsePageInfo = blogService.queryBlogList(pageNum, pageSize);
             log.info("博客信息列表-RESP: {}", JSON.toJSONString(responsePageInfo));
             return ResponseHelper.create(responsePageInfo);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(), ResultCode.SELECT_ERROR.getMsg());
         }
@@ -44,13 +44,13 @@ public class BlogController {
 
     @ApiOperation("一篇博客信息")
     @GetMapping("/query/one")
-    public ResponseV2 selectOneBlog(@RequestParam("blogId")String blogId) {
+    public ResponseV2 selectOneBlog(@RequestParam("blogId") String blogId) {
         log.info("一篇博客信息-REQ: {}", blogId);
         try {
             BlogResponse response = blogService.queryBlogByBlogId(blogId);
             log.info("一篇博客信息-RESP: {}", JSON.toJSONString(response));
             return ResponseHelper.create(response);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseHelper.create(ResultCode.SELECT_ERROR.getCode(), ResultCode.SELECT_ERROR.getMsg());
         }

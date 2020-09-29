@@ -28,7 +28,7 @@ public class SwaggerConfig {
                 .build().apiInfo(new ApiInfoBuilder()
                         .title("个人博客接口-Swagger")
                         .description("个人博客接口")
-                        .contact(new Contact("0xTiefer-Atem","https://github.com/0xTiefer-Atem","1144502582@qq.com"))
+                        .contact(new Contact("0xTiefer-Atem", "https://github.com/0xTiefer-Atem", "1144502582@qq.com"))
                         .version("1.0")
                         .build());
     }

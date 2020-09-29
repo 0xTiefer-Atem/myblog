@@ -18,18 +18,18 @@ import lombok.NoArgsConstructor;
 public class UserAccount {
     /**
      * 用户id
-     * */
+     */
     private String userId;
     /**
      * 账户
-     * */
+     */
     private String userAccount;
     /**
      * 密码
-     * */
+     */
     private String userPwd;
     /**
      * 创建时间
-     * */
+     */
     private Date createTime;
 }

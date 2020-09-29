@@ -21,13 +21,13 @@ public class BlogServiceImpl implements BlogService {
 
     /**
      * 返回博客信息列表
-     * */
+     */
     @Override
     public PageInfo<BlogInfoResponse> queryBlogList(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<BlogInfoResponse> blogInfoList = new ArrayList<>();
-        List<Blog> blogs  = blogMapper.queryBlogList();
-        for (Blog blog: blogs) {
+        List<Blog> blogs = blogMapper.queryBlogList();
+        for (Blog blog : blogs) {
             BlogInfoResponse blogInfo = BlogInfoResponse.builder()
                     .blogId(blog.getBlogId())
                     .blogType(blog.getBlogType())
@@ -38,7 +38,7 @@ public class BlogServiceImpl implements BlogService {
                     .build();
             blogInfoList.add(blogInfo);
         }
-        PageInfo<BlogInfoResponse>  responsePageInfo = new PageInfo<>(blogInfoList);
+        PageInfo<BlogInfoResponse> responsePageInfo = new PageInfo<>(blogInfoList);
         return responsePageInfo;
     }
 
@@ -61,7 +61,7 @@ public class BlogServiceImpl implements BlogService {
     public List<BlogResponse> querySpecialBlog() {
         List<BlogResponse> responses = new ArrayList<>();
         List<Blog> specialBlogList = blogMapper.querySpecialBlog();
-        for (Blog blog: specialBlogList) {
+        for (Blog blog : specialBlogList) {
             BlogResponse response = BlogResponse.builder()
                     .blogId(blog.getBlogId())
                     .blogType(blog.getBlogType())

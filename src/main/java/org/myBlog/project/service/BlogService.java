@@ -10,20 +10,22 @@ import java.util.List;
 
 /**
  * 博客操作业务层
- * */
+ */
 @Service
 public interface BlogService {
 
     /**
      * 查询博客列表
-     * */
+     */
     PageInfo<BlogInfoResponse> queryBlogList(Integer pageNum, Integer pageSize);
+
     /**
      * 根据blogId查询博客
-     * */
+     */
     BlogResponse queryBlogByBlogId(String blogId);
+
     /**
      * 查询在校经历与工作经历
-     * */
+     */
     List<BlogResponse> querySpecialBlog();
 }

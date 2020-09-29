@@ -14,4 +14,6 @@ public interface UserInfoMapper {
 
     UserInfo queryUserInfoByUserNo(@Param("userNo") String userNo);
 
+    void updateUserInfo(UserInfo userInfo);
+
 }

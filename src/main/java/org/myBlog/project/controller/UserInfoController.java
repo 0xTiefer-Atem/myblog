@@ -11,6 +11,7 @@ import org.myBlog.project.util.ResponseHelper;
 import org.myBlog.project.util.ResponseV2;
 import org.myBlog.project.vo.bolg.response.RelatedLinks;
 import org.myBlog.project.vo.bolg.response.SkillInfo;
+import org.myBlog.project.vo.user.request.UpdateUserInfoRequest;
 import org.myBlog.project.vo.user.response.UserInfoResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +43,19 @@ public class UserInfoController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseHelper.create(ResultCodeEnum.SELECT_ERROR.getCode(), ResultCodeEnum.SELECT_ERROR.getMsg());
+        }
+    }
+
+    @ApiOperation("修改用户信息")
+    @PostMapping("/update/user/info")
+    public ResponseV2 updaeUserInfo(@RequestBody UpdateUserInfoRequest request) {
+        log.info("修改用户信息-REQ: {}", JSON.toJSONString(request));
+        try {
+            userService.updateUserInfo(request);
+            return ResponseHelper.create();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseHelper.create(ResultCodeEnum.UPDATE_ERROR.getCode(), ResultCodeEnum.UPDATE_ERROR.getMsg());
         }
     }
 }

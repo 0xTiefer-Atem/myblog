@@ -1,4 +1,9 @@
-package org.myBlog.project.vo.user.response;
+package org.myBlog.project.vo.user.request;
+
+/**
+ * @Author WangQian
+ * @Date 2020/9/29 下午 4:48
+ */
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,18 +11,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @Author WangQian
- * @Date 2020/9/29 下午 4:20
- */
-
-/**
- * 返回用户信息字段
+ * 跟新用户信息请求参数字段
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserInfoResponse {
+public class UpdateUserInfoRequest {
     /**
      * 用户编号
      */

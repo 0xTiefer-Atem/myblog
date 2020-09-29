@@ -9,15 +9,24 @@
         <result column="user_motor" jdbcType="VARCHAR" property="userMotor"/>
         <result column="user_related_links" jdbcType="VARCHAR" property="userRelatedLinks"/>
         <result column="user_skillInfo_list" jdbcType="VARCHAR" property="userSkillInfoList"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
         user_no, user_avatar, user_name, user_motor, user_related_links, user_skillInfo_list,
-        create_time
+        create_time, update_time
     </sql>
     <select id="queryUserInfoByUserNo" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"></include>
         from user_info
         where user_no = #{userNo}
     </select>
+
+    <update id="updateUserInfo" parameterType="org.myBlog.project.entity.UserInfo">
+        update user_info set
+        user_avatar = #{userAvatar}, user_name = #{userName}, user_motor = #{userMotor},
+        user_related_links = #{userRelatedLinks}, user_skillInfo_list = #{userSkillInfoList}
+        where
+        user_no = #{userNo}
+    </update>
 </mapper>

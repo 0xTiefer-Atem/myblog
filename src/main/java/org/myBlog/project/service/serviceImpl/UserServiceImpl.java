@@ -3,8 +3,10 @@ package org.myBlog.project.service.serviceImpl;
 import org.myBlog.project.entity.UserInfo;
 import org.myBlog.project.mapper.UserInfoMapper;
 import org.myBlog.project.service.UserService;
+import org.myBlog.project.vo.user.request.UpdateUserInfoRequest;
 import org.myBlog.project.vo.user.response.UserInfoResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -19,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 根据用户编号查询用户信息
-     * */
+     */
     @Override
     public UserInfoResponse queryUserInfoByUserNo(String userNo) {
         UserInfo userInfo = userInfoMapper.queryUserInfoByUserNo(userNo);
@@ -32,5 +34,22 @@ public class UserServiceImpl implements UserService {
                 .userSkillInfoList(userInfo.getUserSkillInfoList())
                 .build();
         return response;
+    }
+
+    /**
+     * 更新用户信息
+     */
+    @Override
+    @Transactional
+    public void updateUserInfo(UpdateUserInfoRequest request) {
+        UserInfo userInfo = UserInfo.builder()
+                .userNo(request.getUserNo())
+                .userAvatar(request.getUserAvatar())
+                .userName(request.getUserName())
+                .userMotor(request.getUserMotor())
+                .userRelatedLinks(request.getUserRelatedLinks())
+                .userSkillInfoList(request.getUserSkillInfoList())
+                .build();
+        userInfoMapper.updateUserInfo(userInfo);
     }
 }

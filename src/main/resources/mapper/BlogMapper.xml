@@ -57,4 +57,11 @@
 
     </insert>
 
+    <update id="updateStatus" >
+        update blog set
+        blog_status = #{status}
+        where
+        blog_id = #{blogId}
+    </update>
+
 </mapper>

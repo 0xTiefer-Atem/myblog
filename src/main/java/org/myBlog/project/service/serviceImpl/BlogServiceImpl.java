@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Service("BlogService")
 public class BlogServiceImpl implements BlogService {
@@ -94,7 +95,7 @@ public class BlogServiceImpl implements BlogService {
     @Transactional
     public void addBlog(AddBlogRequest request) {
         String blogId = "B" + GetUUID.getUUID();
-        Date insetDate = new Date();
+        Date insertDate = new Date();
         Blog b = Blog.builder()
                 .blogId(blogId)
                 .blogType(request.getBlogType())
@@ -103,8 +104,17 @@ public class BlogServiceImpl implements BlogService {
                 .blogOverview(request.getBlogOverview())
                 .blogContent(request.getBlogContent())
                 .blogStatus(BlogStatusEnum.USE.getStatus())
-                .createTime(insetDate)
+                .createTime(insertDate)
                 .build();
         blogMapper.addBlog(b);
+    }
+
+    /**
+     * 修改博客状态
+     */
+    @Override
+    @Transactional
+    public void updateStatus(String blogId, Integer status) {
+        blogMapper.updateStatus(blogId, status);
     }
 }

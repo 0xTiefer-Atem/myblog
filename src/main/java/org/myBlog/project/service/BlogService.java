@@ -6,6 +6,7 @@ import org.myBlog.project.vo.bolg.request.AddBlogRequest;
 import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -34,4 +35,9 @@ public interface BlogService {
      * 新增博客
      */
     void addBlog(AddBlogRequest request);
+
+    /**
+     * 修改博客状态
+     */
+    void updateStatus(String blogId, Integer status);
 }

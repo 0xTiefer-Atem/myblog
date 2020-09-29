@@ -84,17 +84,16 @@ public class BlogController {
 
 
     @ApiOperation("更新博客状态")
-    @PostMapping("/update/status")
-    public ResponseV2 updateOneBlogStatus(@RequestBody JSONObject data) {
-        String id = data.getString("id");
-        System.out.println(id);
+    @GetMapping("/update/status")
+    public ResponseV2 updateOneBlogStatus(@RequestParam("blogId") String blogId, @RequestParam("status") Integer status) {
+        log.info("更新博客状态-REQ: {}, {}", blogId, status);
         try {
-//            blogDao.updateOneBlogStatus(id);
+            blogService.updateStatus(blogId, status);
+            return ResponseHelper.create();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseHelper.create(ResultCodeEnum.UPDATE_ERROR.getCode(), ResultCodeEnum.UPDATE_ERROR.getMsg());
         }
-        return ResponseHelper.create();
     }
 
 

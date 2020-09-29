@@ -23,4 +23,6 @@ public interface BlogMapper {
     List<Blog> querySpecialBlog();
 
     void addBlog(Blog blog);
+
+    void updateStatus(@Param("blogId") String blogId, @Param("status") Integer status);
 }

@@ -1,6 +1,7 @@
 package org.myBlog.project.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.myBlog.project.vo.bolg.response.RelatedLinks;
@@ -20,6 +21,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserInfo {
     /**
      * id
@@ -53,5 +55,9 @@ public class UserInfo {
      * 创建时间
      */
     private Date createTime;
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
 
 }

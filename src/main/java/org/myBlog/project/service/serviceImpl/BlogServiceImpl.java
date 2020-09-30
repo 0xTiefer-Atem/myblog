@@ -16,6 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -136,5 +140,32 @@ public class BlogServiceImpl implements BlogService {
                 .blogContent(request.getBlogContent())
                 .build();
         blogMapper.updateBlog(b);
+    }
+
+    @Override
+    public void downloadMdFile(String blogId, HttpServletResponse response) {
+        OutputStream responseOutPut = null;
+        try {
+            Blog blog = blogMapper.queryBlogByBlogId(blogId);
+            String blogTitle = blog.getBlogTitle();
+            String fileName = URLEncoder.encode(blogTitle + ".md", "utf-8").replaceAll("\\+", "%20");
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("application/force-download");// 设置强制下载不打开
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+            responseOutPut = response.getOutputStream();
+            responseOutPut.write(blog.getBlogRawContent().getBytes());
+            responseOutPut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (responseOutPut != null) {
+                try {
+                    responseOutPut.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

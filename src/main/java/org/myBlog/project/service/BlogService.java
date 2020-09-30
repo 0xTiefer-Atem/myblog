@@ -9,6 +9,7 @@ import org.myBlog.project.vo.bolg.response.BlogResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -46,4 +47,9 @@ public interface BlogService {
      * 更新博客
      */
     void updateBlog(UpdateBlogRequest request);
+
+    /**
+     * 下载md文件
+     */
+    void downloadMdFile(String blogId, HttpServletResponse response);
 }

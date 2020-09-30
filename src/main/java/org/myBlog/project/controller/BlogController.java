@@ -12,9 +12,11 @@ import org.myBlog.project.vo.bolg.request.AddBlogRequest;
 import org.myBlog.project.vo.bolg.request.UpdateBlogRequest;
 import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -107,6 +109,17 @@ public class BlogController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseHelper.create(ResultCodeEnum.UPDATE_ERROR.getCode(), ResultCodeEnum.UPDATE_ERROR.getMsg());
+        }
+    }
+
+    @ApiOperation("md文件下载")
+    @GetMapping("/download/md")
+    public void downloadMdFile(@RequestParam("blogId") String blogId, HttpServletResponse response) {
+        log.info("md文件下载: {}", blogId);
+        try {
+            blogService.downloadMdFile(blogId, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

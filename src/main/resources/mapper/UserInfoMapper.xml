@@ -17,7 +17,8 @@
         create_time, update_time
     </sql>
     <select id="queryUserInfoByUserNo" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"></include>
+        select
+        <include refid="Base_Column_List"></include>
         from user_info
         where user_no = #{userNo}
     </select>

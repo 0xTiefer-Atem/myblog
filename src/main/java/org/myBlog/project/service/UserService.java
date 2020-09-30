@@ -12,10 +12,11 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     /**
      * 查询用户信息
-     * */
+     */
     UserInfoResponse queryUserInfoByUserNo(String userNo);
+
     /**
      * 更新用户信息
-     * */
+     */
     void updateUserInfo(UpdateUserInfoRequest request);
 }

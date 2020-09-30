@@ -46,7 +46,11 @@ public class Blog {
      */
     private String blogOverview;
     /**
-     * 文章内容
+     * markdown原语法值
+     */
+    private String blogRawContent;
+    /**
+     * 文章经过markdown渲染后内容
      */
     private String blogContent;
 

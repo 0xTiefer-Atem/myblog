@@ -1,5 +1,6 @@
 package org.myBlog.project.service.serviceImpl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.myBlog.project.entity.Blog;
@@ -11,7 +12,6 @@ import org.myBlog.project.vo.bolg.request.AddBlogRequest;
 import org.myBlog.project.vo.bolg.request.UpdateBlogRequest;
 import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,6 +60,7 @@ public class BlogServiceImpl implements BlogService {
                 .blogTagList(blog.getBlogTagList())
                 .blogTitle(blog.getBlogTitle())
                 .blogOverview(blog.getBlogOverview())
+                .blogRawContent(blog.getBlogRawContent())
                 .blogContent(blog.getBlogContent())
                 .createTime(blog.getCreateTime())
                 .build();
@@ -102,6 +103,7 @@ public class BlogServiceImpl implements BlogService {
                 .blogTagList(request.getBlogTagList())
                 .blogTitle(request.getBlogTitle())
                 .blogOverview(request.getBlogOverview())
+                .blogRawContent(request.getBlogRawContent())
                 .blogContent(request.getBlogContent())
                 .blogStatus(BlogStatusEnum.USE.getStatus())
                 .createTime(insertDate)
@@ -130,6 +132,7 @@ public class BlogServiceImpl implements BlogService {
                 .blogType(request.getBlogType())
                 .blogTagList(request.getBlogTagList())
                 .blogOverview(request.getBlogOverview())
+                .blogRawContent(request.getBlogRawContent())
                 .blogContent(request.getBlogContent())
                 .build();
         blogMapper.updateBlog(b);

@@ -39,6 +39,10 @@ public class UpdateBlogRequest {
      */
     private String blogOverview;
     /**
+     * markdown原代码
+     */
+    private String blogRawContent;
+    /**
      * 内容
      */
     private String blogContent;

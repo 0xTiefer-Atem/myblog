@@ -8,13 +8,14 @@
         <result column="blog_tag_list" jdbcType="VARCHAR" property="blogTagList"/>
         <result column="blog_title" jdbcType="VARCHAR" property="blogTitle"/>
         <result column="blog_overview" jdbcType="VARCHAR" property="blogOverview"/>
+        <result column="blog_raw_content" jdbcType="VARCHAR" property="blogRawContent"/>
         <result column="blog_content" jdbcType="VARCHAR" property="blogContent"/>
         <result column="blog_status" jdbcType="INTEGER" property="blogStatus"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, blog_id, blog_type, blog_tag_list, blog_title, blog_overview, blog_content, blog_status,
+    id, blog_id, blog_type, blog_tag_list, blog_title, blog_raw_content, blog_overview, blog_content, blog_status,
     create_time, update_time
   </sql>
 
@@ -31,7 +32,7 @@
 
     <select id="queryBlogByBlogId" resultMap="BaseResultMap">
         select blog_id, blog_type, blog_tag_list,
-        blog_title, blog_overview, blog_content, create_time
+        blog_title, blog_overview, blog_raw_content, blog_content, create_time
         from
         blog
         where
@@ -40,7 +41,7 @@
 
     <select id="querySpecialBlog" resultMap="BaseResultMap">
         select blog_id, blog_type, blog_tag_list,
-        blog_title, blog_overview, blog_content, create_time
+        blog_title, blog_raw_content, blog_overview, blog_content, create_time
         from
         blog
         where
@@ -50,10 +51,10 @@
     <insert id="addBlog" parameterType="org.myBlog.project.entity.Blog">
         insert into
         blog
-        (blog_id, blog_type, blog_tag_list, blog_title, blog_overview,
+        (blog_id, blog_type, blog_tag_list, blog_title, blog_raw_content, blog_overview,
         blog_content, blog_status, create_time)
         values
-        (#{blogId}, #{blogType}, #{blogTagList}, #{blogTitle},
+        (#{blogId}, #{blogType}, #{blogTagList}, #{blogTitle}, #{blogRawContent},
         #{blogOverview}, #{blogContent}, #{blogStatus}, #{createTime})
 
     </insert>
@@ -68,7 +69,7 @@
     <update id="updateBlog" parameterType="org.myBlog.project.entity.Blog">
         update blog set
         blog_title = #{blogTitle}, blog_type = #{blogType}, blog_tag_list = #{blogTagList},
-        blog_overview = #{blogOverview}, blog_content = #{blogContent}
+        blog_overview = #{blogOverview}, blog_raw_content = #{blogRawContent}, blog_content = #{blogContent}
         where
         blog_id = #{blogId}
     </update>

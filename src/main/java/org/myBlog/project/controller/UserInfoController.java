@@ -1,6 +1,7 @@
 package org.myBlog.project.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.myBlog.project.vo.bolg.response.SkillInfo;
 import org.myBlog.project.vo.user.request.UpdateUserInfoRequest;
 import org.myBlog.project.vo.user.response.UserInfoResponse;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -52,6 +54,20 @@ public class UserInfoController {
         log.info("修改用户信息-REQ: {}", JSON.toJSONString(request));
         try {
             userService.updateUserInfo(request);
+            return ResponseHelper.create();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseHelper.create(ResultCodeEnum.UPDATE_ERROR.getCode(), ResultCodeEnum.UPDATE_ERROR.getMsg());
+        }
+    }
+
+    @ApiOperation("头像上传")
+    @PostMapping("/upload/avatar")
+    public ResponseV2 uploadAvatar(@RequestParam("file") MultipartFile file) {
+        log.info("头像上传-REQ: {}", JSON.toJSONString(file));
+        try {
+            JSONObject res = userService.uploadAvatar(file);
+            log.info("头像上传-RESP: {}", JSON.toJSONString(res));
             return ResponseHelper.create();
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,8 +1,10 @@
 package org.myBlog.project.service;
 
+import com.alibaba.fastjson.JSONObject;
 import org.myBlog.project.vo.user.request.UpdateUserInfoRequest;
 import org.myBlog.project.vo.user.response.UserInfoResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Author WangQian
@@ -19,4 +21,9 @@ public interface UserService {
      * 更新用户信息
      */
     void updateUserInfo(UpdateUserInfoRequest request);
+
+    /**
+     * 上传头像
+     */
+    JSONObject uploadAvatar(MultipartFile file);
 }

@@ -64,11 +64,11 @@ public class UserInfoController {
     @ApiOperation("头像上传")
     @PostMapping("/upload/avatar")
     public ResponseV2 uploadAvatar(@RequestParam("file") MultipartFile file) {
-        log.info("头像上传-REQ: {}", JSON.toJSONString(file));
+        log.info("头像上传-REQ: {}", JSON.toJSONString(file.getOriginalFilename()));
         try {
             JSONObject res = userService.uploadAvatar(file);
             log.info("头像上传-RESP: {}", JSON.toJSONString(res));
-            return ResponseHelper.create();
+            return ResponseHelper.create(res);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseHelper.create(ResultCodeEnum.UPDATE_ERROR.getCode(), ResultCodeEnum.UPDATE_ERROR.getMsg());

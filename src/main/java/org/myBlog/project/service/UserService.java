@@ -6,6 +6,8 @@ import org.myBlog.project.vo.user.response.UserInfoResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 /**
  * @Author WangQian
  * @Date 2020/9/29 下午 4:24
@@ -25,5 +27,5 @@ public interface UserService {
     /**
      * 上传头像
      */
-    JSONObject uploadAvatar(MultipartFile file);
+    JSONObject uploadAvatar(MultipartFile file) throws IOException;
 }

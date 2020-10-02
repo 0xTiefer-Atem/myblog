@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserInfoMapper userInfoMapper;
 
-    private static String BASE_PATH = "/home/wq/my-blog/picture/user/avatar";
+    private static final String BASE_PATH = "/home/wq/my-blog/picture/user/avatar/";
 
     /**
      * 根据用户编号查询用户信息
@@ -64,18 +64,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public JSONObject uploadAvatar(MultipartFile file) {
+    public JSONObject uploadAvatar(MultipartFile file) throws IOException {
         String fileName = file.getOriginalFilename();
         String fileType = fileName.split("\\.")[1];
         log.info("fileName: {}", file.getOriginalFilename());
         String name = GetUUID.getUUID(); // 随机的uuid
         String filePath = BASE_PATH + name + "." + fileType;
-        try {
-            File dest = new File(filePath);
-            file.transferTo(dest);
-        } catch (IOException e) {
-            e.printStackTrace();
+        File avatarFile = new File(filePath);
+        if (!avatarFile.exists()) {
+            avatarFile.mkdirs();
         }
+        file.transferTo(avatarFile);
         String imgUrl = "http://47.107.64.157/user/avatar/" + name + "." + fileType;
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("imgUrl", imgUrl);

@@ -3,6 +3,7 @@ package org.myBlog.project.service.serviceImpl;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.myBlog.project.entity.Blog;
 import org.myBlog.project.enums.BlogStatusEnum;
 import org.myBlog.project.mapper.BlogMapper;
@@ -14,9 +15,11 @@ import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -25,9 +28,13 @@ import java.util.Date;
 import java.util.List;
 
 @Service("BlogService")
+@Slf4j
 public class BlogServiceImpl implements BlogService {
     @Resource
     private BlogMapper blogMapper;
+
+//    private static final String BASE_PATH = "E:\\picture\\blog\\";
+    private static final String BASE_PATH = "/home/wq/my-blog/picture/blog/";
 
     /**
      * 返回博客信息列表
@@ -167,5 +174,23 @@ public class BlogServiceImpl implements BlogService {
                 }
             }
         }
+    }
+
+    @Override
+    public JSONObject uploadImg(MultipartFile file, String blogId) throws IOException {
+        String fileName = file.getOriginalFilename();
+        String fileType = fileName.split("\\.")[1];
+        log.info("fileName: {}", file.getOriginalFilename());
+        String imgName = GetUUID.getUUID(); // 随机的uuid
+        String filePath = BASE_PATH + blogId + "/" + imgName + "." + fileType;
+        File imgFile = new File(filePath);
+        if (!imgFile.exists()) {
+            imgFile.mkdirs();
+        }
+        file.transferTo(imgFile);
+        String imgUrl = "http://47.107.64.157/blog/"+blogId+"/" + imgName + "." + fileType;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("imgUrl", imgUrl);
+        return jsonObject;
     }
 }

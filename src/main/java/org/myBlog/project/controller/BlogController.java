@@ -14,6 +14,7 @@ import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -120,6 +121,19 @@ public class BlogController {
             blogService.downloadMdFile(blogId, response);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @ApiOperation("md中添加图片")
+    @PostMapping("/upload/img")
+    public ResponseV2 uploadImg(@RequestParam("file") MultipartFile file, @RequestParam("blogId") String blogId) {
+        log.info("md中添加图片: {}, {}", file.getOriginalFilename(), blogId);
+        try {
+            JSONObject res = blogService.uploadImg(file, blogId);
+            return ResponseHelper.create(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseHelper.create(ResultCodeEnum.UPLOAD_ERROR.getCode(), ResultCodeEnum.UPLOAD_ERROR.getMsg());
         }
     }
 }

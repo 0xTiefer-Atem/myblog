@@ -1,5 +1,6 @@
 package org.myBlog.project.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import org.myBlog.project.entity.Blog;
 import org.myBlog.project.vo.bolg.request.AddBlogRequest;
@@ -8,8 +9,10 @@ import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -52,4 +55,9 @@ public interface BlogService {
      * 下载md文件
      */
     void downloadMdFile(String blogId, HttpServletResponse response);
+
+    /**
+     * md上传图片
+     * */
+    JSONObject uploadImg(MultipartFile file, String blogId) throws IOException;
 }

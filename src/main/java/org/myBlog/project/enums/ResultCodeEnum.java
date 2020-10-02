@@ -25,11 +25,15 @@ public enum ResultCodeEnum {
     /**
      * 删除失败
      */
-    DELETE_ERROR(50001, "删除失败"),
+    DELETE_ERROR(50003, "删除失败"),
+    /**
+     * 删除失败
+     */
+    UPLOAD_ERROR(50004, "上传图片失败"),
     /**
      * 更新失败
      */
-    UPDATE_ERROR(50001, "更新失败");
+    UPDATE_ERROR(50005, "更新失败");
 
 
     private int code;

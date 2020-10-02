@@ -31,7 +31,7 @@
     </select>
 
     <select id="queryBlogByBlogNo" resultMap="BaseResultMap">
-        select blog_no, blog_type, blog_tag_list,
+        select blog_no,blog_cover_url, blog_type, blog_tag_list,
         blog_title, blog_overview, blog_raw_content, create_time
         from
         blog

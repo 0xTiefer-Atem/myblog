@@ -25,6 +25,10 @@ public class BlogResponse {
      */
     private String blogNo;
     /**
+     * 封面
+     */
+    private String blogCoverUrl;
+    /**
      * 分类
      */
     private String blogType;

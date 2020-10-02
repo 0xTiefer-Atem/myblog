@@ -69,6 +69,7 @@ public class BlogServiceImpl implements BlogService {
         Blog blog = blogMapper.queryBlogByBlogNo(blogNo);
         BlogResponse response = BlogResponse.builder()
                 .blogNo(blog.getBlogNo())
+                .blogCoverUrl(blog.getBlogCoverUrl())
                 .blogType(blog.getBlogType())
                 .blogTagList(blog.getBlogTagList())
                 .blogTitle(blog.getBlogTitle())

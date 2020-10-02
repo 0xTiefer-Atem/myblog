@@ -9,6 +9,7 @@ import org.myBlog.project.enums.BlogStatusEnum;
 import org.myBlog.project.mapper.BlogMapper;
 import org.myBlog.project.service.BlogService;
 import org.myBlog.project.util.GetUUID;
+import org.myBlog.project.util.TimeOpt;
 import org.myBlog.project.vo.bolg.request.AddBlogRequest;
 import org.myBlog.project.vo.bolg.request.UpdateBlogRequest;
 import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
@@ -33,8 +34,8 @@ public class BlogServiceImpl implements BlogService {
     @Resource
     private BlogMapper blogMapper;
 
-//    private static final String BASE_PATH = "E:\\picture\\blog\\";
-    private static final String BASE_PATH = "/home/wq/my-blog/picture/blog/";
+    private static final String BASE_PATH = "E:\\picture\\blog\\";
+//    private static final String BASE_PATH = "/home/wq/my-blog/picture/blog/";
 
     /**
      * 返回博客信息列表
@@ -46,7 +47,8 @@ public class BlogServiceImpl implements BlogService {
         List<Blog> blogs = blogMapper.queryBlogList();
         for (Blog blog : blogs) {
             BlogInfoResponse blogInfo = BlogInfoResponse.builder()
-                    .blogId(blog.getBlogId())
+                    .blogNo(blog.getBlogNo())
+                    .blogCoverUrl(blog.getBlogCoverUrl())
                     .blogType(blog.getBlogType())
                     .blogTagList(blog.getBlogTagList())
                     .blogTitle(blog.getBlogTitle())
@@ -63,16 +65,15 @@ public class BlogServiceImpl implements BlogService {
      * 根据blogId查询博客
      */
     @Override
-    public BlogResponse queryBlogByBlogId(String blogId) {
-        Blog blog = blogMapper.queryBlogByBlogId(blogId);
+    public BlogResponse queryBlogByBlogNo(String blogNo) {
+        Blog blog = blogMapper.queryBlogByBlogNo(blogNo);
         BlogResponse response = BlogResponse.builder()
-                .blogId(blog.getBlogId())
+                .blogNo(blog.getBlogNo())
                 .blogType(blog.getBlogType())
                 .blogTagList(blog.getBlogTagList())
                 .blogTitle(blog.getBlogTitle())
                 .blogOverview(blog.getBlogOverview())
                 .blogRawContent(blog.getBlogRawContent())
-                .blogContent(blog.getBlogContent())
                 .createTime(blog.getCreateTime())
                 .build();
         return response;
@@ -82,17 +83,17 @@ public class BlogServiceImpl implements BlogService {
      * 查询在校经历与工作经历
      */
     @Override
-    public List<BlogResponse> querySpecialBlog() {
-        List<BlogResponse> responses = new ArrayList<>();
+    public List<BlogInfoResponse> querySpecialBlog() {
+        List<BlogInfoResponse> responses = new ArrayList<>();
         List<Blog> specialBlogList = blogMapper.querySpecialBlog();
         for (Blog blog : specialBlogList) {
-            BlogResponse response = BlogResponse.builder()
-                    .blogId(blog.getBlogId())
+            BlogInfoResponse response = BlogInfoResponse.builder()
+                    .blogNo(blog.getBlogNo())
+                    .blogCoverUrl(blog.getBlogCoverUrl())
                     .blogType(blog.getBlogType())
                     .blogTagList(blog.getBlogTagList())
                     .blogTitle(blog.getBlogTitle())
                     .blogOverview(blog.getBlogOverview())
-                    .blogContent(blog.getBlogContent())
                     .createTime(blog.getCreateTime())
                     .build();
             responses.add(response);
@@ -106,16 +107,16 @@ public class BlogServiceImpl implements BlogService {
     @Override
     @Transactional
     public void addBlog(AddBlogRequest request) {
-        String blogId = "B" + GetUUID.getUUID();
+        String blogNo = "B" + GetUUID.getUUID();
         Date insertDate = new Date();
         Blog b = Blog.builder()
-                .blogId(blogId)
+                .blogNo(blogNo)
+                .blogCoverUrl(request.getBlogCoverUrl())
                 .blogType(request.getBlogType())
                 .blogTagList(request.getBlogTagList())
                 .blogTitle(request.getBlogTitle())
                 .blogOverview(request.getBlogOverview())
                 .blogRawContent(request.getBlogRawContent())
-                .blogContent(request.getBlogContent())
                 .blogStatus(BlogStatusEnum.USE.getStatus())
                 .createTime(insertDate)
                 .build();
@@ -127,8 +128,8 @@ public class BlogServiceImpl implements BlogService {
      */
     @Override
     @Transactional
-    public void updateStatus(String blogId, Integer status) {
-        blogMapper.updateStatus(blogId, status);
+    public void updateStatus(String blogNo, Integer status) {
+        blogMapper.updateStatus(blogNo, status);
     }
 
     /**
@@ -138,22 +139,22 @@ public class BlogServiceImpl implements BlogService {
     @Transactional
     public void updateBlog(UpdateBlogRequest request) {
         Blog b = Blog.builder()
-                .blogId(request.getBlogId())
+                .blogNo(request.getBlogNo())
+                .blogCoverUrl(request.getBlogCoverUrl())
                 .blogTitle(request.getBlogTitle())
                 .blogType(request.getBlogType())
                 .blogTagList(request.getBlogTagList())
                 .blogOverview(request.getBlogOverview())
                 .blogRawContent(request.getBlogRawContent())
-                .blogContent(request.getBlogContent())
                 .build();
         blogMapper.updateBlog(b);
     }
 
     @Override
-    public void downloadMdFile(String blogId, HttpServletResponse response) {
+    public void downloadMdFile(String blogNo, HttpServletResponse response) {
         OutputStream responseOutPut = null;
         try {
-            Blog blog = blogMapper.queryBlogByBlogId(blogId);
+            Blog blog = blogMapper.queryBlogByBlogNo(blogNo);
             String blogTitle = blog.getBlogTitle();
             String fileName = URLEncoder.encode(blogTitle + ".md", "utf-8").replaceAll("\\+", "%20");
             response.setCharacterEncoding("utf-8");
@@ -177,18 +178,19 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public JSONObject uploadImg(MultipartFile file, String blogId) throws IOException {
+    public JSONObject uploadImg(MultipartFile file) throws IOException {
         String fileName = file.getOriginalFilename();
         String fileType = fileName.split("\\.")[1];
         log.info("fileName: {}", file.getOriginalFilename());
         String imgName = GetUUID.getUUID(); // 随机的uuid
-        String filePath = BASE_PATH + blogId + "/" + imgName + "." + fileType;
+        String Date = TimeOpt.getCurrentTimeStr();
+        String filePath = BASE_PATH + Date + "/" + imgName + "." + fileType;
         File imgFile = new File(filePath);
         if (!imgFile.exists()) {
             imgFile.mkdirs();
         }
         file.transferTo(imgFile);
-        String imgUrl = "http://47.107.64.157/blog/"+blogId+"/" + imgName + "." + fileType;
+        String imgUrl = "http://47.107.64.157/blog/" + Date + "/" + imgName + "." + fileType;
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("imgUrl", imgUrl);
         return jsonObject;

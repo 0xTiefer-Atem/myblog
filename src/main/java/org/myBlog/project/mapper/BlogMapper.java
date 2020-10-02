@@ -18,13 +18,13 @@ public interface BlogMapper {
 
     List<Blog> queryBlogList();
 
-    Blog queryBlogByBlogId(@Param("blogId") String blogId);
+    Blog queryBlogByBlogNo(@Param("blogNo") String blogNo);
 
     List<Blog> querySpecialBlog();
 
     void addBlog(Blog blog);
 
-    void updateStatus(@Param("blogId") String blogId, @Param("status") Integer status);
+    void updateStatus(@Param("blogNo") String blogNo, @Param("status") Integer status);
 
     void updateBlog(Blog blog);
 }

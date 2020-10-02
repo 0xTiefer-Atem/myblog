@@ -21,9 +21,13 @@ import java.util.Date;
 @Builder
 public class BlogInfoResponse {
     /**
-     * 博客id
+     * 博客No
      */
-    private String blogId;
+    private String blogNo;
+    /**
+     * 封面URL
+     */
+    private String blogCoverUrl;
     /**
      * 分类
      */

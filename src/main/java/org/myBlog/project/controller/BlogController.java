@@ -12,7 +12,6 @@ import org.myBlog.project.vo.bolg.request.AddBlogRequest;
 import org.myBlog.project.vo.bolg.request.UpdateBlogRequest;
 import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,10 +46,10 @@ public class BlogController {
 
     @ApiOperation("一篇博客信息")
     @GetMapping("/query/one")
-    public ResponseV2 selectOneBlog(@RequestParam("blogId") String blogId) {
-        log.info("一篇博客信息-REQ: {}", blogId);
+    public ResponseV2 selectOneBlog(@RequestParam("blogNo") String blogNo) {
+        log.info("一篇博客信息-REQ: {}", blogNo);
         try {
-            BlogResponse response = blogService.queryBlogByBlogId(blogId);
+            BlogResponse response = blogService.queryBlogByBlogNo(blogNo);
             log.info("一篇博客信息-RESP: {}", JSON.toJSONString(response));
             return ResponseHelper.create(response);
         } catch (Exception e) {
@@ -63,7 +62,7 @@ public class BlogController {
     @GetMapping("/query/special")
     public ResponseV2 querySpecialBlog() {
         try {
-            List<BlogResponse> responses = blogService.querySpecialBlog();
+            List<BlogInfoResponse> responses = blogService.querySpecialBlog();
             log.info("个人简历和在校经历-RESP: {}", JSON.toJSONString(responses));
             return ResponseHelper.create(responses);
         } catch (Exception e) {
@@ -88,10 +87,10 @@ public class BlogController {
 
     @ApiOperation("更新博客状态")
     @GetMapping("/update/status")
-    public ResponseV2 updateOneBlogStatus(@RequestParam("blogId") String blogId, @RequestParam("status") Integer status) {
-        log.info("更新博客状态-REQ: {}, {}", blogId, status);
+    public ResponseV2 updateOneBlogStatus(@RequestParam("blogNo") String blogNo, @RequestParam("status") Integer status) {
+        log.info("更新博客状态-REQ: {}, {}", blogNo, status);
         try {
-            blogService.updateStatus(blogId, status);
+            blogService.updateStatus(blogNo, status);
             return ResponseHelper.create();
         } catch (Exception e) {
             e.printStackTrace();
@@ -115,10 +114,10 @@ public class BlogController {
 
     @ApiOperation("md文件下载")
     @GetMapping("/download/md")
-    public void downloadMdFile(@RequestParam("blogId") String blogId, HttpServletResponse response) {
-        log.info("md文件下载: {}", blogId);
+    public void downloadMdFile(@RequestParam("blogNo") String blogNo, HttpServletResponse response) {
+        log.info("md文件下载: {}", blogNo);
         try {
-            blogService.downloadMdFile(blogId, response);
+            blogService.downloadMdFile(blogNo, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,10 +125,10 @@ public class BlogController {
 
     @ApiOperation("md中添加图片")
     @PostMapping("/upload/img")
-    public ResponseV2 uploadImg(@RequestParam("file") MultipartFile file, @RequestParam("blogId") String blogId) {
-        log.info("md中添加图片: {}, {}", file.getOriginalFilename(), blogId);
+    public ResponseV2 uploadImg(@RequestParam("file") MultipartFile file) {
+        log.info("md中添加图片: {}", file.getOriginalFilename());
         try {
-            JSONObject res = blogService.uploadImg(file, blogId);
+            JSONObject res = blogService.uploadImg(file);
             return ResponseHelper.create(res);
         } catch (Exception e) {
             e.printStackTrace();

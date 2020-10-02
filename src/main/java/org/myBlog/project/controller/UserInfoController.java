@@ -2,23 +2,18 @@ package org.myBlog.project.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.myBlog.project.entity.UserInfo;
 import org.myBlog.project.enums.ResultCodeEnum;
 import org.myBlog.project.service.UserService;
 import org.myBlog.project.util.ResponseHelper;
 import org.myBlog.project.util.ResponseV2;
-import org.myBlog.project.vo.bolg.response.RelatedLinks;
-import org.myBlog.project.vo.bolg.response.SkillInfo;
 import org.myBlog.project.vo.user.request.UpdateUserInfoRequest;
 import org.myBlog.project.vo.user.response.UserInfoResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * 个人信息(UserInfo)表控制层

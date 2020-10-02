@@ -4,11 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.myBlog.project.vo.bolg.response.RelatedLinks;
-import org.myBlog.project.vo.bolg.response.SkillInfo;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 个人信息(UserInfo)实体类

@@ -3,26 +3,26 @@
 <mapper namespace="org.myBlog.project.mapper.BlogMapper">
     <resultMap id="BaseResultMap" type="org.myBlog.project.entity.Blog">
         <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="blog_id" jdbcType="VARCHAR" property="blogId"/>
+        <result column="blog_no" jdbcType="VARCHAR" property="blogNo"/>
+        <result column="blog_cover_url" jdbcType="VARCHAR" property="blogCoverUrl"/>
         <result column="blog_type" jdbcType="VARCHAR" property="blogType"/>
         <result column="blog_tag_list" jdbcType="VARCHAR" property="blogTagList"/>
         <result column="blog_title" jdbcType="VARCHAR" property="blogTitle"/>
         <result column="blog_overview" jdbcType="VARCHAR" property="blogOverview"/>
         <result column="blog_raw_content" jdbcType="VARCHAR" property="blogRawContent"/>
-        <result column="blog_content" jdbcType="VARCHAR" property="blogContent"/>
         <result column="blog_status" jdbcType="INTEGER" property="blogStatus"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, blog_id, blog_type, blog_tag_list, blog_title, blog_raw_content, blog_overview, blog_content, blog_status,
+    id, blog_no,blog_cover_url, blog_type, blog_tag_list, blog_title, blog_raw_content, blog_overview, blog_status,
     create_time, update_time
   </sql>
 
     <select id="queryBlogList" resultMap="BaseResultMap">
         select
-        blog_id, blog_type, blog_tag_list, blog_title,
-        blog_overview, create_time
+        blog_no, blog_cover_url, blog_type,
+        blog_tag_list, blog_title, blog_overview, create_time
         from
         blog
         where
@@ -30,18 +30,18 @@
         order by create_time desc
     </select>
 
-    <select id="queryBlogByBlogId" resultMap="BaseResultMap">
-        select blog_id, blog_type, blog_tag_list,
-        blog_title, blog_overview, blog_raw_content, blog_content, create_time
+    <select id="queryBlogByBlogNo" resultMap="BaseResultMap">
+        select blog_no, blog_type, blog_tag_list,
+        blog_title, blog_overview, blog_raw_content, create_time
         from
         blog
         where
-        blog_id = #{blogId}
+        blog_no = #{blogNo}
     </select>
 
     <select id="querySpecialBlog" resultMap="BaseResultMap">
-        select blog_id, blog_type, blog_tag_list,
-        blog_title, blog_raw_content, blog_overview, blog_content, create_time
+        select blog_no, blog_cover_url, blog_type, blog_tag_list,
+        blog_title, blog_raw_content, blog_overview, create_time
         from
         blog
         where
@@ -51,11 +51,11 @@
     <insert id="addBlog" parameterType="org.myBlog.project.entity.Blog">
         insert into
         blog
-        (blog_id, blog_type, blog_tag_list, blog_title, blog_raw_content, blog_overview,
-        blog_content, blog_status, create_time)
+        (blog_no, blog_cover_url, blog_type, blog_tag_list, blog_title, blog_raw_content, blog_overview, blog_status, create_time)
         values
-        (#{blogId}, #{blogType}, #{blogTagList}, #{blogTitle}, #{blogRawContent},
-        #{blogOverview}, #{blogContent}, #{blogStatus}, #{createTime})
+        (#{blogNo}, #{blogCoverUrl}, #{blogType},
+        #{blogTagList}, #{blogTitle}, #{blogRawContent},
+        #{blogOverview}, #{blogStatus}, #{createTime})
 
     </insert>
 
@@ -63,15 +63,15 @@
         update blog set
         blog_status = #{status}
         where
-        blog_id = #{blogId}
+        blog_no = #{blogNo}
     </update>
 
     <update id="updateBlog" parameterType="org.myBlog.project.entity.Blog">
         update blog set
-        blog_title = #{blogTitle}, blog_type = #{blogType}, blog_tag_list = #{blogTagList},
-        blog_overview = #{blogOverview}, blog_raw_content = #{blogRawContent}, blog_content = #{blogContent}
+        blog_title = #{blogTitle}, blog_cover_url = #{blogCoverUrl} ,blog_type = #{blogType}, blog_tag_list = #{blogTagList},
+        blog_overview = #{blogOverview}, blog_raw_content = #{blogRawContent}
         where
-        blog_id = #{blogId}
+        blog_no = #{blogNo}
     </update>
 
 </mapper>

@@ -21,9 +21,9 @@ import java.util.Date;
 @Builder
 public class BlogResponse {
     /**
-     * 博客id
+     * 博客编号
      */
-    private String blogId;
+    private String blogNo;
     /**
      * 分类
      */
@@ -44,10 +44,6 @@ public class BlogResponse {
      * markdown原代码
      */
     private String blogRawContent;
-    /**
-     * 内容
-     */
-    private String blogContent;
     /**
      * 创建时间
      */

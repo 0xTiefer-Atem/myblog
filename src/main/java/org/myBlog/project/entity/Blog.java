@@ -21,12 +21,18 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Blog {
-
+    /**
+     * 主键Id
+     */
     private Integer id;
     /**
-     * 文章id
+     * 文章编号
      */
-    private String blogId;
+    private String blogNo;
+    /**
+     * 文章封面地址
+     */
+    private String blogCoverUrl;
     /**
      * 文章分类
      */
@@ -35,12 +41,10 @@ public class Blog {
      * 文章标签
      */
     private String blogTagList;
-
     /**
      * 文章标题
      */
     private String blogTitle;
-
     /**
      * 概览
      */
@@ -49,11 +53,6 @@ public class Blog {
      * markdown原语法值
      */
     private String blogRawContent;
-    /**
-     * 文章经过markdown渲染后内容
-     */
-    private String blogContent;
-
     /**
      * 文章使用状态
      */

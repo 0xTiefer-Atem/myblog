@@ -7,8 +7,8 @@ import java.util.Date;
 
 public class TimeOpt {
     private static Date date = new Date();
-    private static String formatString = "yyyy-MM-dd HH:mm";
-    private static SimpleDateFormat sdf = new SimpleDateFormat(formatString);
+    private static String FORMAT_STRING_1 = "yyyy-MM-dd HH:mm";
+    private static String FORMAT_STRING_2 = "yyyyMMdd";
 
     /**
      * 获取当前时间
@@ -17,6 +17,16 @@ public class TimeOpt {
      */
     public static Date getCurrentTime() {
         return new Date();
+    }
+
+    /**
+     * 获取当前时间字符串
+     *
+     * @return
+     */
+    public static String getCurrentTimeStr() {
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_STRING_2);
+        return sdf.format(new Date());
     }
 
 
@@ -30,6 +40,7 @@ public class TimeOpt {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) + day);
         Date today = calendar.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_STRING_1);
         String result = sdf.format(today);
         return result;
     }
@@ -45,6 +56,8 @@ public class TimeOpt {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - past);
         Date today = calendar.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_STRING_1);
+
         String result = sdf.format(today);
         return result;
     }
@@ -52,6 +65,7 @@ public class TimeOpt {
 
     public static int is_late(String DATE1, String DATE2) {
         try {
+            SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_STRING_1);
             Date dt1 = sdf.parse(DATE1);
             Date dt2 = sdf.parse(DATE2);
             if (dt1.getTime() > dt2.getTime()) {
@@ -72,6 +86,7 @@ public class TimeOpt {
 
     public static int morningOrAfterNoon(String date) {
         try {
+            SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_STRING_1);
             Date date1 = sdf.parse(date);
             int hour = date1.getHours();
             if (hour >= 8 && hour <= 11) {
@@ -100,6 +115,7 @@ public class TimeOpt {
         Date d1 = null;
         Date d2 = null;
         try {
+            SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_STRING_1);
             d1 = sdf.parse(date1);
             d2 = sdf.parse(date2);
         } catch (ParseException e) {

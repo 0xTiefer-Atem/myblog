@@ -19,9 +19,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UpdateBlogRequest {
     /**
-     * 博客Id
+     * 博客编号
      */
-    private String blogId;
+    private String blogNo;
+    /**
+     * 封面URL
+     */
+    private String blogCoverUrl;
     /**
      * 分类
      */
@@ -42,8 +46,4 @@ public class UpdateBlogRequest {
      * markdown原代码
      */
     private String blogRawContent;
-    /**
-     * 内容
-     */
-    private String blogContent;
 }

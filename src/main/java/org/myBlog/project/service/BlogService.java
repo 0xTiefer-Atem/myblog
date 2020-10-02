@@ -29,12 +29,12 @@ public interface BlogService {
     /**
      * 根据blogId查询博客
      */
-    BlogResponse queryBlogByBlogId(String blogId);
+    BlogResponse queryBlogByBlogNo(String blogNo);
 
     /**
      * 查询在校经历与工作经历
      */
-    List<BlogResponse> querySpecialBlog();
+    List<BlogInfoResponse> querySpecialBlog();
 
     /**
      * 新增博客
@@ -44,7 +44,7 @@ public interface BlogService {
     /**
      * 修改博客状态
      */
-    void updateStatus(String blogId, Integer status);
+    void updateStatus(String blogNo, Integer status);
 
     /**
      * 更新博客
@@ -54,10 +54,10 @@ public interface BlogService {
     /**
      * 下载md文件
      */
-    void downloadMdFile(String blogId, HttpServletResponse response);
+    void downloadMdFile(String blogNo, HttpServletResponse response);
 
     /**
      * md上传图片
-     * */
-    JSONObject uploadImg(MultipartFile file, String blogId) throws IOException;
+     */
+    JSONObject uploadImg(MultipartFile file) throws IOException;
 }

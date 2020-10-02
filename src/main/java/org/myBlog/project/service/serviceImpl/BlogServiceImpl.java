@@ -34,8 +34,8 @@ public class BlogServiceImpl implements BlogService {
     @Resource
     private BlogMapper blogMapper;
 
-    private static final String BASE_PATH = "E:\\picture\\blog\\";
-//    private static final String BASE_PATH = "/home/wq/my-blog/picture/blog/";
+//    private static final String BASE_PATH = "E:\\picture\\blog\\";
+    private static final String BASE_PATH = "/home/wq/my-blog/picture/blog/";
 
     /**
      * 返回博客信息列表

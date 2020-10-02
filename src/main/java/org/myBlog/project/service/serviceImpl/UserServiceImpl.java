@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserInfoMapper userInfoMapper;
 
+    //    private static final String BASE_PATH = "E:\\picture\\user\\avatar\\";
     private static final String BASE_PATH = "/home/wq/my-blog/picture/user/avatar/";
 
     /**

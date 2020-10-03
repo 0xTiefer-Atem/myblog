@@ -123,12 +123,13 @@ public class BlogController {
         }
     }
 
-    @ApiOperation("md中添加图片")
+    @ApiOperation("上传图片")
     @PostMapping("/upload/img")
     public ResponseV2 uploadImg(@RequestParam("file") MultipartFile file) {
-        log.info("md中添加图片: {}", file.getOriginalFilename());
+        log.info("上传图片-REQ: {}", file.getOriginalFilename());
         try {
             JSONObject res = blogService.uploadImg(file);
+            log.info("上传图片-RESP: {}", JSON.toJSONString(res));
             return ResponseHelper.create(res);
         } catch (Exception e) {
             e.printStackTrace();

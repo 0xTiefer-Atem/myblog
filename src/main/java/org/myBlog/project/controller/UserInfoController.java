@@ -8,6 +8,7 @@ import org.myBlog.project.enums.ResultCodeEnum;
 import org.myBlog.project.service.UserService;
 import org.myBlog.project.util.ResponseHelper;
 import org.myBlog.project.util.ResponseV2;
+import org.myBlog.project.vo.user.request.LoginRequest;
 import org.myBlog.project.vo.user.request.UpdateUserInfoRequest;
 import org.myBlog.project.vo.user.response.UserInfoResponse;
 import org.springframework.web.bind.annotation.*;
@@ -67,6 +68,20 @@ public class UserInfoController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseHelper.create(ResultCodeEnum.UPDATE_ERROR.getCode(), ResultCodeEnum.UPDATE_ERROR.getMsg());
+        }
+    }
+
+    @ApiOperation("用户登录")
+    @PostMapping("/login")
+    public ResponseV2 longin(LoginRequest request) {
+        log.info("用户登录-REQ: {}", JSON.toJSONString(request));
+        try {
+            ResponseV2 res = userService.checkAccount(request);
+            log.info("用户登录-RESP: {}", JSON.toJSONString(res));
+            return res;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseHelper.create(ResultCodeEnum.SELECT_ERROR.getCode(), ResultCodeEnum.SELECT_ERROR.getMsg());
         }
     }
 }

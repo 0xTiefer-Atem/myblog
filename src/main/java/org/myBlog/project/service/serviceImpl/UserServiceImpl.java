@@ -2,14 +2,20 @@ package org.myBlog.project.service.serviceImpl;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.myBlog.project.entity.Account;
 import org.myBlog.project.entity.UserInfo;
+import org.myBlog.project.mapper.AccountMapper;
 import org.myBlog.project.mapper.UserInfoMapper;
 import org.myBlog.project.service.UserService;
 import org.myBlog.project.util.GetUUID;
+import org.myBlog.project.util.ResponseHelper;
+import org.myBlog.project.util.ResponseV2;
+import org.myBlog.project.vo.user.request.LoginRequest;
 import org.myBlog.project.vo.user.request.UpdateUserInfoRequest;
 import org.myBlog.project.vo.user.response.UserInfoResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -26,6 +32,9 @@ import java.io.OutputStream;
 public class UserServiceImpl implements UserService {
     @Resource
     private UserInfoMapper userInfoMapper;
+
+    @Resource
+    private AccountMapper accountMapper;
 
     //    private static final String BASE_PATH = "E:\\picture\\user\\avatar\\";
     private static final String BASE_PATH = "/home/wq/my-blog/picture/user/avatar/";
@@ -80,5 +89,22 @@ public class UserServiceImpl implements UserService {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("imgUrl", imgUrl);
         return jsonObject;
+    }
+
+    /**
+     * 登录账户校验
+     */
+    @Override
+    public ResponseV2 checkAccount(LoginRequest request) {
+        //查询数据库里的账户
+        Account account = accountMapper.queryAccount(request.getUserAccount());
+        String md5Password = DigestUtils.md5DigestAsHex(request.getUserPwd().trim().getBytes());
+        if(account == null) {
+            return ResponseHelper.create(201, "账户不存在");
+        }
+        if (account.getUserPwd().equals(md5Password)) {
+            return ResponseHelper.create();
+        }
+        return ResponseHelper.create(202, "密码错误");
     }
 }

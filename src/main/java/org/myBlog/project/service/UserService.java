@@ -1,6 +1,8 @@
 package org.myBlog.project.service;
 
 import com.alibaba.fastjson.JSONObject;
+import org.myBlog.project.util.ResponseV2;
+import org.myBlog.project.vo.user.request.LoginRequest;
 import org.myBlog.project.vo.user.request.UpdateUserInfoRequest;
 import org.myBlog.project.vo.user.response.UserInfoResponse;
 import org.springframework.stereotype.Service;
@@ -28,4 +30,9 @@ public interface UserService {
      * 上传头像
      */
     JSONObject uploadAvatar(MultipartFile file) throws IOException;
+
+    /**
+     * 登录账户校验
+     */
+    ResponseV2 checkAccount(LoginRequest request);
 }

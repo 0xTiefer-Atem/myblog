@@ -25,7 +25,7 @@ public class Account {
     /**
      * 用户id
      */
-    private String userId;
+    private String userNo;
     /**
      * 账户
      */

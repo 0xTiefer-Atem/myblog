@@ -73,7 +73,7 @@ public class UserInfoController {
 
     @ApiOperation("用户登录")
     @PostMapping("/login")
-    public ResponseV2 longin(LoginRequest request) {
+    public ResponseV2 longin(@RequestBody LoginRequest request) {
         log.info("用户登录-REQ: {}", JSON.toJSONString(request));
         try {
             ResponseV2 res = userService.checkAccount(request);

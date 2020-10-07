@@ -3,7 +3,7 @@
 <mapper namespace="org.myBlog.project.mapper.AccountMapper">
     <resultMap id="BaseResultMap" type="org.myBlog.project.entity.Account">
         <result column="id" jdbcType="INTEGER" property="id"/>
-        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="user_no" jdbcType="VARCHAR" property="userNo"/>
         <result column="user_account" jdbcType="VARCHAR" property="userAccount"/>
         <result column="user_pwd" jdbcType="VARCHAR" property="userPwd"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -11,7 +11,7 @@
 
     <select id="queryAccount" resultMap="BaseResultMap">
         select
-        user_id, user_account, user_pwd
+        user_no, user_account, user_pwd
         from account
         where
         user_account = #{userAccount}

@@ -12,6 +12,7 @@ import org.myBlog.project.util.ResponseHelper;
 import org.myBlog.project.util.ResponseV2;
 import org.myBlog.project.vo.user.request.LoginRequest;
 import org.myBlog.project.vo.user.request.UpdateUserInfoRequest;
+import org.myBlog.project.vo.user.response.LoginInfoResponse;
 import org.myBlog.project.vo.user.response.UserInfoResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,7 +104,14 @@ public class UserServiceImpl implements UserService {
             return ResponseHelper.create(201, "账户不存在");
         }
         if (account.getUserPwd().equals(md5Password)) {
-            return ResponseHelper.create();
+            //登录成功返回用户信息
+            UserInfo userInfo = userInfoMapper.queryUserInfoByUserNo(account.getUserNo());
+            LoginInfoResponse response = LoginInfoResponse.builder()
+                    .userNo(userInfo.getUserNo())
+                    .userName(userInfo.getUserName())
+                    .userAvatar(userInfo.getUserAvatar())
+                    .build();
+            return ResponseHelper.create(response);
         }
         return ResponseHelper.create(202, "密码错误");
     }

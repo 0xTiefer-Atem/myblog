@@ -1,5 +1,6 @@
 package org.myBlog.project.service.serviceImpl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -14,6 +15,7 @@ import org.myBlog.project.vo.bolg.request.AddBlogRequest;
 import org.myBlog.project.vo.bolg.request.UpdateBlogRequest;
 import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 import org.myBlog.project.vo.bolg.response.BlogResponse;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +29,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service("BlogService")
 @Slf4j
@@ -34,7 +37,10 @@ public class BlogServiceImpl implements BlogService {
     @Resource
     private BlogMapper blogMapper;
 
-//    private static final String BASE_PATH = "E:\\picture\\blog\\";
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
+    //    private static final String BASE_PATH = "E:\\picture\\blog\\";
     private static final String BASE_PATH = "/home/wq/my-blog/picture/blog/";
 
     /**
@@ -57,8 +63,7 @@ public class BlogServiceImpl implements BlogService {
                     .build();
             blogInfoList.add(blogInfo);
         }
-        PageInfo<BlogInfoResponse> responsePageInfo = new PageInfo<>(blogInfoList);
-        return responsePageInfo;
+        return new PageInfo<>(blogInfoList);
     }
 
     /**
@@ -66,6 +71,15 @@ public class BlogServiceImpl implements BlogService {
      */
     @Override
     public BlogResponse queryBlogByBlogNo(String blogNo) {
+        //先查询缓存
+        String o = stringRedisTemplate.opsForValue().get(blogNo);
+        if (o != null) {
+            log.info("一篇博客信息-通过查询缓存返回");
+            return JSONObject.parseObject(o, BlogResponse.class);
+        }
+
+        //缓存没有命中,查询数据库
+        log.info("一篇博客信息-通过查询数据库返回");
         Blog blog = blogMapper.queryBlogByBlogNo(blogNo);
         BlogResponse response = BlogResponse.builder()
                 .blogNo(blog.getBlogNo())
@@ -77,6 +91,10 @@ public class BlogServiceImpl implements BlogService {
                 .blogRawContent(blog.getBlogRawContent())
                 .createTime(blog.getCreateTime())
                 .build();
+
+        //放入缓存中,6小时过期
+        stringRedisTemplate.opsForValue().set(blogNo, JSONObject.toJSONString(response), 6, TimeUnit.HOURS);
+        //返回数据
         return response;
     }
 
@@ -85,6 +103,15 @@ public class BlogServiceImpl implements BlogService {
      */
     @Override
     public List<BlogInfoResponse> querySpecialBlog() {
+        //查询缓存
+        String o = stringRedisTemplate.opsForValue().get("special");
+        if (o != null) {
+            log.info("查询在校经历与工作经历-通过查询缓存返回");
+            return JSONArray.parseArray(o, BlogInfoResponse.class);
+        }
+
+        //缓存未命中,查询数据库
+        log.info("查询在校经历与工作经历-通过查询数据库返回");
         List<BlogInfoResponse> responses = new ArrayList<>();
         List<Blog> specialBlogList = blogMapper.querySpecialBlog();
         for (Blog blog : specialBlogList) {
@@ -99,6 +126,8 @@ public class BlogServiceImpl implements BlogService {
                     .build();
             responses.add(response);
         }
+        //放入缓存,6小时过期
+        stringRedisTemplate.opsForValue().set("special", JSONObject.toJSONString(responses), 6, TimeUnit.HOURS);
         return responses;
     }
 
@@ -121,7 +150,22 @@ public class BlogServiceImpl implements BlogService {
                 .blogStatus(BlogStatusEnum.USE.getStatus())
                 .createTime(insertDate)
                 .build();
+        //插入数据库
         blogMapper.addBlog(b);
+
+        //新增博客放入缓存,6小时过期
+        BlogResponse response = BlogResponse.builder()
+                .blogNo(b.getBlogNo())
+                .blogCoverUrl(b.getBlogCoverUrl())
+                .blogType(b.getBlogType())
+                .blogTagList(b.getBlogTagList())
+                .blogTitle(b.getBlogTitle())
+                .blogOverview(b.getBlogOverview())
+                .blogRawContent(b.getBlogRawContent())
+                .createTime(b.getCreateTime())
+                .build();
+        stringRedisTemplate.opsForValue().set(response.getBlogNo(), JSONObject.toJSONString(b), 6, TimeUnit.HOURS);
+        log.info("新增博客-插入缓存 {}", response.getBlogNo());
     }
 
     /**
@@ -148,9 +192,26 @@ public class BlogServiceImpl implements BlogService {
                 .blogOverview(request.getBlogOverview())
                 .blogRawContent(request.getBlogRawContent())
                 .build();
+        //更新数据库
         blogMapper.updateBlog(b);
+        //更新缓存
+        BlogResponse response = BlogResponse.builder()
+                .blogNo(b.getBlogNo())
+                .blogCoverUrl(b.getBlogCoverUrl())
+                .blogType(b.getBlogType())
+                .blogTagList(b.getBlogTagList())
+                .blogTitle(b.getBlogTitle())
+                .blogOverview(b.getBlogOverview())
+                .blogRawContent(b.getBlogRawContent())
+                .createTime(b.getCreateTime())
+                .build();
+        stringRedisTemplate.opsForValue().set(response.getBlogNo(), JSONObject.toJSONString(response), 6, TimeUnit.HOURS);
+        log.info("更新博客-更新缓存 {}", response.getBlogNo());
     }
 
+    /**
+     * 导出成md文件
+     */
     @Override
     public void downloadMdFile(String blogNo, HttpServletResponse response) {
         OutputStream responseOutPut = null;
@@ -178,9 +239,14 @@ public class BlogServiceImpl implements BlogService {
         }
     }
 
+
+    /**
+     * 上传图片
+     */
     @Override
     public JSONObject uploadImg(MultipartFile file) throws IOException {
         String fileName = file.getOriginalFilename();
+        assert fileName != null;
         String fileType = fileName.split("\\.")[1];
         log.info("fileName: {}", file.getOriginalFilename());
         String imgName = GetUUID.getUUID(); // 随机的uuid

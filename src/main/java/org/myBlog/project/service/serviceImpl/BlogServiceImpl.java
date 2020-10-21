@@ -94,6 +94,7 @@ public class BlogServiceImpl implements BlogService {
 
         //放入缓存中,6小时过期
         stringRedisTemplate.opsForValue().set(blogNo, JSONObject.toJSONString(response), 6, TimeUnit.HOURS);
+        log.info("一篇博客信息-插入缓存 {}", response.getBlogNo());
         //返回数据
         return response;
     }
@@ -128,6 +129,7 @@ public class BlogServiceImpl implements BlogService {
         }
         //放入缓存,6小时过期
         stringRedisTemplate.opsForValue().set("special", JSONObject.toJSONString(responses), 6, TimeUnit.HOURS);
+        log.info("查询在校经历与工作经历-插入缓存");
         return responses;
     }
 

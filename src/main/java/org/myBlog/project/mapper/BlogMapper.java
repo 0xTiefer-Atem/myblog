@@ -3,6 +3,7 @@ package org.myBlog.project.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.myBlog.project.entity.Blog;
+import org.myBlog.project.vo.bolg.response.BlogInfoResponse;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ import java.util.List;
 public interface BlogMapper {
 
     List<Blog> queryBlogList();
+
+    List<BlogInfoResponse> queryBlogInfoList();
 
     Blog queryBlogByBlogNo(@Param("blogNo") String blogNo);
 

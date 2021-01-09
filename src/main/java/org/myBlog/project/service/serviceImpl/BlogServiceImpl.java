@@ -49,20 +49,8 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public PageInfo<BlogInfoResponse> queryBlogList(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<BlogInfoResponse> blogInfoList = new ArrayList<>();
-        List<Blog> blogs = blogMapper.queryBlogList();
-        for (Blog blog : blogs) {
-            BlogInfoResponse blogInfo = BlogInfoResponse.builder()
-                    .blogNo(blog.getBlogNo())
-                    .blogCoverUrl(blog.getBlogCoverUrl())
-                    .blogType(blog.getBlogType())
-                    .blogTagList(blog.getBlogTagList())
-                    .blogTitle(blog.getBlogTitle())
-                    .blogOverview(blog.getBlogOverview())
-                    .createTime(blog.getCreateTime())
-                    .build();
-            blogInfoList.add(blogInfo);
-        }
+        List<BlogInfoResponse> blogInfoList = blogMapper.queryBlogInfoList();
+        log.info("blogs size: {}", blogInfoList.size());
         return new PageInfo<>(blogInfoList);
     }
 

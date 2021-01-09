@@ -136,4 +136,18 @@ public class BlogController {
             return ResponseHelper.create(ResultCodeEnum.UPLOAD_ERROR.getCode(), ResultCodeEnum.UPLOAD_ERROR.getMsg());
         }
     }
+
+    @ApiOperation("根据关键字查询文章")
+    @GetMapping("/queryByKey")
+    public ResponseV2 queryByKey(@RequestParam("queryKey") String queryKey, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
+        log.info("根据关键字查询文章-REQ: {}, {}, {}", queryKey, pageNum, pageSize);
+        try {
+            PageInfo<BlogInfoResponse> responsePageInfo = blogService.queryByKey(queryKey, pageNum, pageSize);
+            log.info("根据关键字查询文章-RESP: {}", responsePageInfo);
+            return ResponseHelper.create(responsePageInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseHelper.create(ResultCodeEnum.SELECT_ERROR.getCode(), ResultCodeEnum.SELECT_ERROR.getMsg());
+        }
+    }
 }

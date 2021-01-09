@@ -50,7 +50,6 @@ public class BlogServiceImpl implements BlogService {
     public PageInfo<BlogInfoResponse> queryBlogList(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<BlogInfoResponse> blogInfoList = blogMapper.queryBlogInfoList();
-        log.info("blogs size: {}", blogInfoList.size());
         return new PageInfo<>(blogInfoList);
     }
 
@@ -250,5 +249,13 @@ public class BlogServiceImpl implements BlogService {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("imgUrl", imgUrl);
         return jsonObject;
+    }
+
+    @Override
+    public PageInfo<BlogInfoResponse> queryByKey(String queryByKey, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<BlogInfoResponse> queryList = blogMapper.queryList(queryByKey);
+        log.info("blogs size: {}", queryList.size());
+        return new PageInfo<>(queryList);
     }
 }

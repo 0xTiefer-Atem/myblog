@@ -60,4 +60,9 @@ public interface BlogService {
      * md上传图片
      */
     JSONObject uploadImg(MultipartFile file) throws IOException;
+
+    /**
+     * 查询博客列表
+     */
+    PageInfo<BlogInfoResponse> queryByKey(String queryByKey, Integer pageNum, Integer pageSize);
 }

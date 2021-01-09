@@ -30,4 +30,6 @@ public interface BlogMapper {
     void updateStatus(@Param("blogNo") String blogNo, @Param("status") Integer status);
 
     void updateBlog(Blog blog);
+
+    List<BlogInfoResponse> queryList(@Param("queryKey") String queryKey);
 }

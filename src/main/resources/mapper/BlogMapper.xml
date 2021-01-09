@@ -103,4 +103,22 @@
         where blog_no = #{blogNo}
     </update>
 
+    <select id="queryList" resultMap="BlogInfoMap">
+        select blog_no,
+               blog_cover_url,
+               blog_type,
+               blog_tag_list,
+               blog_title,
+               blog_overview,
+               create_time
+        from blog
+        <where>
+            blog_status = 1
+            <if test="queryKey != null">
+                and blog_title like concat('%',#{queryKey},'%')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
 </mapper>

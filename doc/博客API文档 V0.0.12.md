@@ -64,36 +64,50 @@
   "msg": "请求成功",
   "result": {
     "data": {
-      "total": 2,
+      "total": 7,
       "list": [
         {
-          "blogNo": "B0a151601560435449",
+          "blogNo": "B65f81604318223526",
           "blogCoverUrl": "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
           "blogType": "test",
-          "blogTagList": "[{\"name\":\"test\"}]",
+          "blogTagList": "[]",
           "blogTitle": "test",
-          "blogOverview": "test",
-          "createTime": "2020-10-01T16:09:17.000+0000"
+          "blogOverview": "",
+          "createTime": "2021-01-08T04:05:33.000+0000"
+        },
+        {
+          "blogNo": "Bc7331604318223526",
+          "blogCoverUrl": "http://47.107.64.157/blog/20210107/08f91604318223526.jpg",
+          "blogType": "机器学习",
+          "blogTagList": "[{\"name\":\"机器学习\"},{\"name\":\"深度学习\"}]",
+          "blogTitle": "2_回归_案例学习",
+          "blogOverview": "回归",
+          "createTime": "2021-01-07T08:47:35.000+0000"
         }
       ],
       "pageNum": 1,
       "pageSize": 2,
       "size": 2,
-      "startRow": 0,
-      "endRow": 1,
-      "pages": 1,
+      "startRow": 1,
+      "endRow": 2,
+      "pages": 4,
       "prePage": 0,
-      "nextPage": 0,
+      "nextPage": 2,
       "isFirstPage": true,
-      "isLastPage": true,
+      "isLastPage": false,
       "hasPreviousPage": false,
-      "hasNextPage": false,
+      "hasNextPage": true,
       "navigatePages": 8,
       "navigatepageNums": [
-        1
+        1,
+        2,
+        3,
+        4
       ],
       "navigateFirstPage": 1,
-      "navigateLastPage": 1
+      "navigateLastPage": 4,
+      "lastPage": 4,
+      "firstPage": 1
     }
   }
 }
@@ -414,7 +428,7 @@
 
 | 变量名 | 类型 | 是否必须 | 说明       |
 | ------ | ---- | -------- | ---------- |
-| file   | file | 是       | 上传的图片 |
+| file   | File | 是       | 上传的图片 |
 
 ### 响应参数说明
 
@@ -444,11 +458,126 @@
 
 
 
+## 局部文章搜索
+
+### 接口说明
+
+根据文章标题搜索文章内容
+
+| 请求方式 | HTTP GET                                                     |
+| -------- | ------------------------------------------------------------ |
+| 接口地址 | http://localhost:9192/api/blog/queryByKey                    |
+| Demo     | http://localhost:9192/api/blog/queryByKey?pageNum=1&pageSize=6&queryKey=%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0 |
+| 调用方向 | 博客前端-->博客服务                                          |
+
+### 请求参数说明
+
+| 变量名   | 类型    | 是否必须 | 说明           |
+| -------- | ------- | -------- | -------------- |
+| queryKey | String  | 是       | 文章标题关键字 |
+| pageNum  | Integer | 是       | 页号           |
+| pageSize | Integer | 是       | 每页大小       |
+
+### 响应参数说明
+
+| 变量名            | 类型    | 是否必须 | 说明                 |
+| ----------------- | ------- | -------- | -------------------- |
+| status            | Integer | 是       | 响应码               |
+| msg               | Integer | 是       | 响应码说明           |
+| result            | Object  | 是       | 对象                 |
+| data              | List    | 是       | 每个对象包含以下字段 |
+| total             | Integer | 是       | 总数量               |
+| list              | List    | 是       | 每个对象包含以下字段 |
+|                   |         |          |                      |
+| blog对象          |         |          |                      |
+| blogNo            | String  | 是       | 博客编号             |
+| blogCoverUrl      | String  | 是       | 封面路径             |
+| blogType          | String  | 是       | 博客类型             |
+| blogTagList       | String  | 是       | 博客标签             |
+| blogTitle         | String  | 是       | 标题                 |
+| blogOverview      | String  | 是       | 概览                 |
+| createTime        | Date    | 是       | 创建时间             |
+|                   |         |          |                      |
+| pageNum           | Integer | 是       | 当前页号             |
+| pageSize          | Integer | 是       | 每页大小             |
+| size              | Integer | 是       | 当前页个数           |
+| startRow          | Integer | 是       | 由第几条开始         |
+| endRow            | Integer | 是       | 到第几条结束         |
+| pages             | Integer | 是       | 总页数               |
+| prePage           | Integer | 是       | 上一页号             |
+| nextPage          | Integer | 是       | 下一页号             |
+| isFirstPage       | blooean | 是       | 首页标识             |
+| isLastPage        | blooean | 是       | 尾页标识             |
+| hasPreviousPage   | blooean | 是       | 上一页标识           |
+| hasNextPage       | blooean | 是       | 下一页标识           |
+| navigatePages     | Integer | 是       | 每页显示的页码个数   |
+| navigatepageNums  | List    | 是       | 页码数               |
+| navigateFirstPage | Integer | 是       | 首页                 |
+| navigateLastPage  | Integer | 是       | 尾页                 |
+
+示例
+
+```json
+{
+  "status": 200,
+  "msg": "请求成功",
+  "result": {
+    "data": {
+      "total": 2,
+      "list": [
+        {
+          "blogNo": "Bc7331604318223526",
+          "blogCoverUrl": "http://47.107.64.157/blog/20210107/08f91604318223526.jpg",
+          "blogType": "机器学习",
+          "blogTagList": "[{\"name\":\"机器学习\"},{\"name\":\"深度学习\"}]",
+          "blogTitle": "2_回归_案例学习",
+          "blogOverview": "回归",
+          "createTime": "2021-01-07T08:47:35.000+0000"
+        },
+        {
+          "blogNo": "Bc6b01604318223526",
+          "blogCoverUrl": "http://47.107.64.157/blog/20210106/d0e41604318223526.jpg",
+          "blogType": "机器学习",
+          "blogTagList": "[{\"name\":\"机器学习\"},{\"name\":\"深度学习\"}]",
+          "blogTitle": "1_简介",
+          "blogOverview": "机器学习简介",
+          "createTime": "2021-01-06T09:56:56.000+0000"
+        }
+      ],
+      "pageNum": 1,
+      "pageSize": 6,
+      "size": 2,
+      "startRow": 1,
+      "endRow": 2,
+      "pages": 1,
+      "prePage": 0,
+      "nextPage": 0,
+      "isFirstPage": true,
+      "isLastPage": true,
+      "hasPreviousPage": false,
+      "hasNextPage": false,
+      "navigatePages": 8,
+      "navigatepageNums": [
+        1
+      ],
+      "navigateFirstPage": 1,
+      "navigateLastPage": 1
+    }
+  }
+}
+```
+
+
+
+
+
+
+
 ## 待添加的添加或者优化的功能
 
-### 1、全局博客搜索  暂定
+### 1、局部博客搜索  暂定
 
-### 2、增加标签筛选功能
+### 2、增加根据类型展示一类文章
 
 ### 3、域名 暂定
 

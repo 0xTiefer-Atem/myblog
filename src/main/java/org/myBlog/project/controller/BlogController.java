@@ -138,13 +138,26 @@ public class BlogController {
     }
 
     @ApiOperation("根据关键字查询文章")
-    @GetMapping("/queryByKey")
+    @GetMapping("/query/key")
     public ResponseV2 queryByKey(@RequestParam("queryKey") String queryKey, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize) {
         log.info("根据关键字查询文章-REQ: {}, {}, {}", queryKey, pageNum, pageSize);
         try {
             PageInfo<BlogInfoResponse> responsePageInfo = blogService.queryByKey(queryKey, pageNum, pageSize);
             log.info("根据关键字查询文章-RESP: {}", responsePageInfo);
             return ResponseHelper.create(responsePageInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseHelper.create(ResultCodeEnum.SELECT_ERROR.getCode(), ResultCodeEnum.SELECT_ERROR.getMsg());
+        }
+    }
+
+    @ApiOperation("查询博客类别")
+    @GetMapping("/query/types")
+    public ResponseV2 queryByKey() {
+        try {
+            List<String> blogTypes = blogService.queryBolgTypes();
+            log.info("查询博客类别-RESP: {}", blogTypes);
+            return ResponseHelper.create(blogTypes);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseHelper.create(ResultCodeEnum.SELECT_ERROR.getCode(), ResultCodeEnum.SELECT_ERROR.getMsg());

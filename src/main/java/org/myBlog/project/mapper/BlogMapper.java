@@ -32,4 +32,6 @@ public interface BlogMapper {
     void updateBlog(Blog blog);
 
     List<BlogInfoResponse> queryList(@Param("queryKey") String queryKey);
+
+    List<String> queryBolgTypes();
 }

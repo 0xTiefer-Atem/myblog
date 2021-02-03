@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service("BlogService")
 @Slf4j
@@ -257,5 +258,15 @@ public class BlogServiceImpl implements BlogService {
         List<BlogInfoResponse> queryList = blogMapper.queryList(queryByKey);
         log.info("blogs size: {}", queryList.size());
         return new PageInfo<>(queryList);
+    }
+
+    /**
+     * 博客类别接口
+     **/
+    @Override
+    public List<String> queryBolgTypes() {
+        List<String> typesList = blogMapper.queryBolgTypes();
+        List<String> distinctTypes = typesList.stream().distinct().collect(Collectors.toList());
+        return distinctTypes;
     }
 }

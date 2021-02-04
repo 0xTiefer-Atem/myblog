@@ -65,4 +65,9 @@ public interface BlogService {
      * 查询博客列表
      */
     PageInfo<BlogInfoResponse> queryByKey(String queryByKey, Integer pageNum, Integer pageSize);
+
+    /**
+     * 博客类别接口
+     **/
+    List<String> queryBolgTypes();
 }

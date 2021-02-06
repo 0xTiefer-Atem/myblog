@@ -26,12 +26,14 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, blog_no,blog_cover_url, blog_type, blog_tag_list, blog_title, blog_raw_content, blog_overview, blog_status,
+        id
+        , blog_no,blog_cover_url, blog_type, blog_tag_list, blog_title, blog_raw_content, blog_overview, blog_status,
     create_time, update_time
     </sql>
 
     <select id="queryBlogList" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"></include>
+        select
+        <include refid="Base_Column_List"></include>
         from blog
         where blog_status = 1
         order by create_time desc
@@ -105,12 +107,12 @@
 
     <select id="queryList" resultMap="BlogInfoMap">
         select blog_no,
-               blog_cover_url,
-               blog_type,
-               blog_tag_list,
-               blog_title,
-               blog_overview,
-               create_time
+        blog_cover_url,
+        blog_type,
+        blog_tag_list,
+        blog_title,
+        blog_overview,
+        create_time
         from blog
         <where>
             blog_status = 1
@@ -119,6 +121,10 @@
             </if>
         </where>
         order by create_time desc
+    </select>
+
+    <select id="queryBolgTypes" resultType="java.lang.String">
+        select blog_type from blog where blog_status = 1
     </select>
 
 </mapper>

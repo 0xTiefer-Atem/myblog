@@ -84,7 +84,6 @@ public class BlogController {
         }
     }
 
-
     @ApiOperation("更新博客状态")
     @GetMapping("/update/status")
     public ResponseV2 updateOneBlogStatus(@RequestParam("blogNo") String blogNo, @RequestParam("status") Integer status) {
@@ -97,7 +96,6 @@ public class BlogController {
             return ResponseHelper.create(ResultCodeEnum.UPDATE_ERROR.getCode(), ResultCodeEnum.UPDATE_ERROR.getMsg());
         }
     }
-
 
     @ApiOperation("更新博客内容")
     @PostMapping("/update/content")

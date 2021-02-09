@@ -252,6 +252,9 @@ public class BlogServiceImpl implements BlogService {
         return jsonObject;
     }
 
+    /**
+     * 查询博客列表
+     */
     @Override
     public PageInfo<BlogInfoResponse> queryByKey(String queryByKey, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
